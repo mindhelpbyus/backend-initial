@@ -1,0 +1,126 @@
+from aws_cdk import (
+    Stack,
+    aws_dynamodb as dynamodb,
+    aws_lambda as _lambda,
+    aws_apigatewayv2 as apigw,
+    aws_apigatewayv2_integrations as apigw_integrations,
+    aws_iam as iam,
+    Duration,
+    RemovalPolicy,
+    CfnOutput
+)
+from constructs import Construct
+import os
+
+class TelehealthBackendStack(Stack):
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        patients_table = dynamodb.Table(
+            self, "PatientsTable",
+            table_name="PatientsTable",
+            partition_key=dynamodb.Attribute(
+                name="patientId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.ON_DEMAND,
+            removal_policy=RemovalPolicy.DESTROY,
+            point_in_time_recovery=True
+        )
+
+        patients_table.add_global_secondary_index(
+            index_name="email-index",
+            partition_key=dynamodb.Attribute(
+                name="email",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="createdAt",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
+        lambda_role = iam.Role(
+            self, "LambdaExecutionRole",
+            assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AWSLambdaBasicExecutionRole")
+            ]
+        )
+
+        patients_table.grant_read_write_data(lambda_role)
+
+        patients_lambda = _lambda.Function(
+            self, "PatientsLambda",
+            runtime=_lambda.Runtime.NODEJS_18_X,
+            handler="handler.handler",
+            code=_lambda.Code.from_asset("src/lambdas/patients/dist"),
+            role=lambda_role,
+            timeout=Duration.seconds(30),
+            environment={
+                "PATIENTS_TABLE": patients_table.table_name,
+                "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
+                "REGION": self.region
+            }
+        )
+
+        http_api = apigw.HttpApi(
+            self, "TelehealthAPI",
+            cors_preflight={
+                "allow_origins": ["*"],
+                "allow_methods": [apigw.CorsHttpMethod.GET, apigw.CorsHttpMethod.POST,
+                               apigw.CorsHttpMethod.PUT, apigw.CorsHttpMethod.DELETE],
+                "allow_headers": ["Content-Type", "Authorization"]
+            }
+        )
+
+        patients_integration = apigw_integrations.HttpLambdaIntegration(
+            "PatientsIntegration",
+            patients_lambda
+        )
+
+        http_api.add_routes(
+            path="/auth/signup",
+            methods=[apigw.HttpMethod.POST],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/auth/login",
+            methods=[apigw.HttpMethod.POST],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/patients",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.POST],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/patients/{patientId}",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.PUT, apigw.HttpMethod.DELETE],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/patients/by-email",
+            methods=[apigw.HttpMethod.GET],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/patients/{patientId}/visits",
+            methods=[apigw.HttpMethod.GET],
+            integration=patients_integration
+        )
+
+        http_api.add_routes(
+            path="/patients/{patientId}/reviews",
+            methods=[apigw.HttpMethod.POST],
+            integration=patients_integration
+        )
+
+        CfnOutput(self, "ApiUrl", value=http_api.url)
+        CfnOutput(self, "PatientsTableName", value=patients_table.table_name)
+        CfnOutput(self, "PatientsLambdaArn", value=patients_lambda.function_arn)
