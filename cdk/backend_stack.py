@@ -23,7 +23,7 @@ class TelehealthBackendStack(Stack):
                 name="patientId",
                 type=dynamodb.AttributeType.STRING
             ),
-            billing_mode=dynamodb.BillingMode.ON_DEMAND,
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY,
             point_in_time_recovery=True
         )
@@ -53,8 +53,8 @@ class TelehealthBackendStack(Stack):
         patients_lambda = _lambda.Function(
             self, "PatientsLambda",
             runtime=_lambda.Runtime.NODEJS_18_X,
-            handler="handler.handler",
-            code=_lambda.Code.from_asset("src/lambdas/patients/dist"),
+            handler="dist/handler.handler",
+            code=_lambda.Code.from_asset("../src/lambdas/patients"),
             role=lambda_role,
             timeout=Duration.seconds(30),
             environment={

@@ -1,0 +1,36 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3": {
+      "displayName": "PatientsLambda/Code",
+      "source": {
+        "path": "asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "000000000000-us-east-1-1e29be5f": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
+          "objectKey": "fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
+        }
+      }
+    },
+    "a0c3dc0b6f455eb54f1f195a5942e65dcce8efb6cacb8b25ba5413dec921b390": {
+      "displayName": "TelehealthBackend-dev Template",
+      "source": {
+        "path": "TelehealthBackend-dev.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "000000000000-us-east-1-e52a65b8": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
+          "objectKey": "a0c3dc0b6f455eb54f1f195a5942e65dcce8efb6cacb8b25ba5413dec921b390.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

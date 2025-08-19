@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient API Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .auth-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .auth-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .token-display {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .token-display input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .api-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 1px solid #e9ecef;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .api-section {
+            margin-bottom: 30px;
+        }
+
+        .api-section h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .api-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .api-item:hover {
+            border-color: #4facfe;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.15);
+        }
+
+        .api-item.active {
+            border-color: #4facfe;
+            background: #e3f2fd;
+        }
+
+        .api-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .method-get { background: #28a745; }
+        .method-post { background: #007bff; }
+        .method-put { background: #ffc107; color: #212529; }
+        .method-delete { background: #dc3545; }
+
+        .api-path {
+            font-family: monospace;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .api-description {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .test-panel {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .test-form {
+            display: none;
+        }
+
+        .test-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .response-section {
+            margin-top: 30px;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-success { background: #d4edda; color: #155724; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .status-info { background: #d1ecf1; color: #0c5460; }
+
+        .response-content {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4facfe;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: #6c757d;
+            padding: 60px 20px;
+        }
+
+        .placeholder-text h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Patient API Explorer</h1>
+            <p>Interactive testing tool for the Patient Management API</p>
+        </div>
+
+        <div class="auth-section">
+            <div class="auth-controls">
+                <div class="token-display">
+                    <label for="authToken">Authentication Token:</label>
+                    <input type="text" id="authToken" placeholder="Token will appear here after login/signup" readonly>
+                </div>
+                <button class="btn btn-success" onclick="quickSignup()">Quick Signup</button>
+                <button class="btn btn-secondary" onclick="clearToken()">Clear Token</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="api-list">
+                <div class="api-section">
+                    <h3>🔐 Authentication</h3>
+                    <div class="api-item" onclick="selectAPI('signup')">
+                        <div class="api-header">
+                            <span class="method-badge method-post">POST</span>
+                            <div>
+                                <div class="api-path">/auth/signup</div>
+                                <div class="api-description">Create a new user account</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('login')">
+                        <div class="api-header">
+                            <span class="method-badge method-post">POST</span>
+                            <div>
+                                <div class="api-path">/auth/login</div>
+                                <div class="api-description">Login with existing credentials</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-section">
+                    <h3>👥 Patient Management</h3>
+                    <div class="api-item" onclick="selectAPI('getPatients')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/patients</div>
+                                <div class="api-description">Get all patients (admin only)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('createPatient')">
+                        <div class="api-header">
+                            <span class="method-badge method-post">POST</span>
+                            <div>
+                                <div class="api-path">/patients</div>
+                                <div class="api-description">Create a new patient (admin only)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('getPatientById')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/patients/{patientId}</div>
+                                <div class="api-description">Get patient by ID</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('updatePatient')">
+                        <div class="api-header">
+                            <span class="method-badge method-put">PUT</span>
+                            <div>
+                                <div class="api-path">/patients/{patientId}</div>
+                                <div class="api-description">Update patient information</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('deletePatient')">
+                        <div class="api-header">
+                            <span class="method-badge method-delete">DELETE</span>
+                            <div>
+                                <div class="api-path">/patients/{patientId}</div>
+                                <div class="api-description">Delete patient (admin only)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('getPatientByEmail')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/patients/by-email</div>
+                                <div class="api-description">Find patient by email</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-section">
+                    <h3>📋 Patient Records</h3>
+                    <div class="api-item" onclick="selectAPI('getVisits')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/patients/{patientId}/visits</div>
+                                <div class="api-description">Get patient visits</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('addReview')">
+                        <div class="api-header">
+                            <span class="method-badge method-post">POST</span>
+                            <div>
+                                <div class="api-path">/patients/{patientId}/reviews</div>
+                                <div class="api-description">Add patient review</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-panel">
+                <div class="placeholder-text">
+                    <h3>👈 Select an API endpoint</h3>
+                    <p>Choose an API from the left panel to start testing</p>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signup-form" class="test-form">
+                    <h2>🔐 User Signup</h2>
+                    <div class="form-group">
+                        <label for="signup-email">Email *</label>
+                        <input type="email" id="signup-email" placeholder="user@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password *</label>
+                        <input type="password" id="signup-password" placeholder="Enter password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-firstName">First Name</label>
+                        <input type="text" id="signup-firstName" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-lastName">Last Name</label>
+                        <input type="text" id="signup-lastName" placeholder="Doe">
+                    </div>
+                    <button class="btn" onclick="executeAPI('signup')">Create Account</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form" class="test-form">
+                    <h2>🔐 User Login</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email *</label>
+                        <input type="email" id="login-email" placeholder="user@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password *</label>
+                        <input type="password" id="login-password" placeholder="Enter password" required>
+                    </div>
+                    <button class="btn" onclick="executeAPI('login')">Login</button>
+                </div>
+
+                <!-- Get Patients Form -->
+                <div id="getPatients-form" class="test-form">
+                    <h2>👥 Get All Patients</h2>
+                    <p><strong>Note:</strong> This endpoint requires admin privileges.</p>
+                    <button class="btn" onclick="executeAPI('getPatients')">Get All Patients</button>
+                </div>
+
+                <!-- Create Patient Form -->
+                <div id="createPatient-form" class="test-form">
+                    <h2>👥 Create Patient</h2>
+                    <p><strong>Note:</strong> This endpoint requires admin privileges.</p>
+                    <div class="form-group">
+                        <label for="create-email">Email *</label>
+                        <input type="email" id="create-email" placeholder="patient@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create-firstName">First Name</label>
+                        <input type="text" id="create-firstName" placeholder="Jane">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-lastName">Last Name</label>
+                        <input type="text" id="create-lastName" placeholder="Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-role">Role</label>
+                        <select id="create-role">
+                            <option value="patient">Patient</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="executeAPI('createPatient')">Create Patient</button>
+                </div>
+
+                <!-- Get Patient By ID Form -->
+                <div id="getPatientById-form" class="test-form">
+                    <h2>👤 Get Patient by ID</h2>
+                    <div class="form-group">
+                        <label for="get-patientId">Patient ID *</label>
+                        <input type="text" id="get-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getPatientById')">Get Patient</button>
+                </div>
+
+                <!-- Update Patient Form -->
+                <div id="updatePatient-form" class="test-form">
+                    <h2>✏️ Update Patient</h2>
+                    <div class="form-group">
+                        <label for="update-patientId">Patient ID *</label>
+                        <input type="text" id="update-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-firstName">First Name</label>
+                        <input type="text" id="update-firstName" placeholder="Updated first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-lastName">Last Name</label>
+                        <input type="text" id="update-lastName" placeholder="Updated last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-email">Email</label>
+                        <input type="email" id="update-email" placeholder="updated@example.com">
+                    </div>
+                    <button class="btn" onclick="executeAPI('updatePatient')">Update Patient</button>
+                </div>
+
+                <!-- Delete Patient Form -->
+                <div id="deletePatient-form" class="test-form">
+                    <h2>🗑️ Delete Patient</h2>
+                    <p><strong>Note:</strong> This endpoint requires admin privileges.</p>
+                    <div class="form-group">
+                        <label for="delete-patientId">Patient ID *</label>
+                        <input type="text" id="delete-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <button class="btn btn-danger" onclick="executeAPI('deletePatient')">Delete Patient</button>
+                </div>
+
+                <!-- Get Patient By Email Form -->
+                <div id="getPatientByEmail-form" class="test-form">
+                    <h2>📧 Get Patient by Email</h2>
+                    <div class="form-group">
+                        <label for="search-email">Email *</label>
+                        <input type="email" id="search-email" placeholder="patient@example.com" required>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getPatientByEmail')">Search Patient</button>
+                </div>
+
+                <!-- Get Visits Form -->
+                <div id="getVisits-form" class="test-form">
+                    <h2>📋 Get Patient Visits</h2>
+                    <div class="form-group">
+                        <label for="visits-patientId">Patient ID *</label>
+                        <input type="text" id="visits-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getVisits')">Get Visits</button>
+                </div>
+
+                <!-- Add Review Form -->
+                <div id="addReview-form" class="test-form">
+                    <h2>⭐ Add Patient Review</h2>
+                    <div class="form-group">
+                        <label for="review-patientId">Patient ID *</label>
+                        <input type="text" id="review-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-rating">Rating *</label>
+                        <select id="review-rating" required>
+                            <option value="">Select rating</option>
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="5">5 - Excellent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-comment">Comment</label>
+                        <textarea id="review-comment" placeholder="Enter your review comment..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-doctorId">Doctor ID</label>
+                        <input type="text" id="review-doctorId" placeholder="Enter doctor ID">
+                    </div>
+                    <button class="btn" onclick="executeAPI('addReview')">Add Review</button>
+                </div>
+
+                <!-- Response Section -->
+                <div id="response-section" class="response-section" style="display: none;">
+                    <div class="response-header">
+                        <h3>Response</h3>
+                        <span id="status-badge" class="status-badge"></span>
+                        <span id="loading-indicator" class="loading" style="display: none;"></span>
+                    </div>
+                    <div id="response-content" class="response-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentAPI = null;
+        let authToken = '';
+        let currentPatientId = '';
+
+        // API Configuration - Using Lambda proxy as primary method
+        const API_BASE_URL = 'https://unknown.execute-api.localhost.localstack.cloud:4566';
+        const LAMBDA_FUNCTION = 'TelehealthBackend-dev-PatientsLambda2BB68394-9ead4f5b';
+        const PROXY_ENDPOINT = '/lambda-proxy'; // Proxy endpoint on same origin
+        const USE_API_GATEWAY = false; // Flag to use API Gateway instead of direct Lambda (disabled due to LocalStack limitations)
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved token if exists
+            const savedToken = localStorage.getItem('authToken');
+            if (savedToken) {
+                authToken = savedToken;
+                document.getElementById('authToken').value = savedToken;
+            }
+        });
+
+        // Select API endpoint
+        function selectAPI(apiName) {
+            // Remove active class from all items
+            document.querySelectorAll('.api-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to selected item
+            event.currentTarget.classList.add('active');
+
+            // Hide all forms
+            document.querySelectorAll('.test-form').forEach(form => {
+                form.classList.remove('active');
+            });
+
+            // Hide placeholder
+            document.querySelector('.placeholder-text').style.display = 'none';
+
+            // Show selected form
+            const form = document.getElementById(apiName + '-form');
+            if (form) {
+                form.classList.add('active');
+                currentAPI = apiName;
+            }
+
+            // Hide response section
+            document.getElementById('response-section').style.display = 'none';
+        }
+
+        // Quick signup function
+        async function quickSignup() {
+            const timestamp = Date.now();
+            const email = `test-${timestamp}@example.com`;
+            const password = 'password123';
+
+            try {
+                const response = await invokeLambda('POST', '/auth/signup', {
+                    email: email,
+                    password: password,
+                    firstName: 'Test',
+                    lastName: 'User'
+                });
+
+                if (response.token) {
+                    authToken = response.token;
+                    currentPatientId = response.patientId;
+                    document.getElementById('authToken').value = authToken;
+                    localStorage.setItem('authToken', authToken);
+                    
+                    showResponse(201, {
+                        message: 'Quick signup successful!',
+                        email: email,
+                        patientId: response.patientId,
+                        token: response.token
+                    });
+                } else {
+                    showResponse(400, { error: 'Signup failed', details: response });
+                }
+            } catch (error) {
+                showResponse(500, { error: 'Quick signup failed', details: error.message });
+            }
+        }
+
+        // Clear authentication token
+        function clearToken() {
+            authToken = '';
+            currentPatientId = '';
+            document.getElementById('authToken').value = '';
+            localStorage.removeItem('authToken');
+            showResponse(200, { message: 'Token cleared successfully' });
+        }
+
+        // Execute API call
+        async function executeAPI(apiName) {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const responseSection = document.getElementById('response-section');
+            
+            loadingIndicator.style.display = 'inline-block';
+            responseSection.style.display = 'block';
+
+            try {
+                let response;
+                
+                switch (apiName) {
+                    case 'signup':
+                        response = await handleSignup();
+                        break;
+                    case 'login':
+                        response = await handleLogin();
+                        break;
+                    case 'getPatients':
+                        response = await handleGetPatients();
+                        break;
+                    case 'createPatient':
+                        response = await handleCreatePatient();
+                        break;
+                    case 'getPatientById':
+                        response = await handleGetPatientById();
+                        break;
+                    case 'updatePatient':
+                        response = await handleUpdatePatient();
+                        break;
+                    case 'deletePatient':
+                        response = await handleDeletePatient();
+                        break;
+                    case 'getPatientByEmail':
+                        response = await handleGetPatientByEmail();
+                        break;
+                    case 'getVisits':
+                        response = await handleGetVisits();
+                        break;
+                    case 'addReview':
+                        response = await handleAddReview();
+                        break;
+                    default:
+                        throw new Error('Unknown API endpoint');
+                }
+
+                showResponse(response.statusCode || 200, response);
+            } catch (error) {
+                showResponse(500, { error: 'Request failed', details: error.message });
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // API Handler Functions
+        async function handleSignup() {
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const firstName = document.getElementById('signup-firstName').value;
+            const lastName = document.getElementById('signup-lastName').value;
+
+            if (!email || !password) {
+                throw new Error('Email and password are required');
+            }
+
+            const response = await invokeLambda('POST', '/auth/signup', {
+                email,
+                password,
+                firstName,
+                lastName
+            });
+
+            if (response.token) {
+                authToken = response.token;
+                currentPatientId = response.patientId;
+                document.getElementById('authToken').value = authToken;
+                localStorage.setItem('authToken', authToken);
+            }
+
+            return response;
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                throw new Error('Email and password are required');
+            }
+
+            const response = await invokeLambda('POST', '/auth/login', {
+                email,
+                password
+            });
+
+            if (response.token) {
+                authToken = response.token;
+                currentPatientId = response.patientId;
+                document.getElementById('authToken').value = authToken;
+                localStorage.setItem('authToken', authToken);
+            }
+
+            return response;
+        }
+
+        async function handleGetPatients() {
+            return await invokeLambda('GET', '/patients', null, authToken);
+        }
+
+        async function handleCreatePatient() {
+            const email = document.getElementById('create-email').value;
+            const firstName = document.getElementById('create-firstName').value;
+            const lastName = document.getElementById('create-lastName').value;
+            const role = document.getElementById('create-role').value;
+
+            if (!email) {
+                throw new Error('Email is required');
+            }
+
+            return await invokeLambda('POST', '/patients', {
+                email,
+                firstName,
+                lastName,
+                role
+            }, authToken);
+        }
+
+        async function handleGetPatientById() {
+            const patientId = document.getElementById('get-patientId').value;
+
+            if (!patientId) {
+                throw new Error('Patient ID is required');
+            }
+
+            return await invokeLambda('GET', `/patients/${patientId}`);
+        }
+
+        async function handleUpdatePatient() {
+            const patientId = document.getElementById('update-patientId').value;
+            const firstName = document.getElementById('update-firstName').value;
+            const lastName = document.getElementById('update-lastName').value;
+            const email = document.getElementById('update-email').value;
+
+            if (!patientId) {
+                throw new Error('Patient ID is required');
+            }
+
+            const updateData = {};
+            if (firstName) updateData.firstName = firstName;
+            if (lastName) updateData.lastName = lastName;
+            if (email) updateData.email = email;
+
+            if (Object.keys(updateData).length === 0) {
+                throw new Error('At least one field must be provided for update');
+            }
+
+            return await invokeLambda('PUT', `/patients/${patientId}`, updateData, authToken);
+        }
+
+        async function handleDeletePatient() {
+            const patientId = document.getElementById('delete-patientId').value;
+
+            if (!patientId) {
+                throw new Error('Patient ID is required');
+            }
+
+            return await invokeLambda('DELETE', `/patients/${patientId}`, null, authToken);
+        }
+
+        async function handleGetPatientByEmail() {
+            const email = document.getElementById('search-email').value;
+
+            if (!email) {
+                throw new Error('Email is required');
+            }
+
+            return await invokeLambda('GET', `/patients/by-email?email=${encodeURIComponent(email)}`);
+        }
+
+        async function handleGetVisits() {
+            const patientId = document.getElementById('visits-patientId').value;
+
+            if (!patientId) {
+                throw new Error('Patient ID is required');
+            }
+
+            return await invokeLambda('GET', `/patients/${patientId}/visits`);
+        }
+
+        async function handleAddReview() {
+            const patientId = document.getElementById('review-patientId').value;
+            const rating = document.getElementById('review-rating').value;
+            const comment = document.getElementById('review-comment').value;
+            const doctorId = document.getElementById('review-doctorId').value;
+
+            if (!patientId || !rating) {
+                throw new Error('Patient ID and rating are required');
+            }
+
+            return await invokeLambda('POST', `/patients/${patientId}/reviews`, {
+                rating: parseInt(rating),
+                comment,
+                doctorId
+            }, authToken);
+        }
+
+        // Real API invocation function using API Gateway
+        async function invokeLambda(method, path, body = null, token = null) {
+            try {
+                if (USE_API_GATEWAY) {
+                    // Use API Gateway endpoint directly
+                    return await callAPIGateway(method, path, body, token);
+                } else {
+                    // Fallback to Lambda proxy
+                    return await callLambdaProxy(method, path, body, token);
+                }
+            } catch (error) {
+                console.error('API invocation error:', error);
+                
+                // Try fallback method if primary fails
+                try {
+                    if (USE_API_GATEWAY) {
+                        console.log('API Gateway failed, trying Lambda proxy...');
+                        return await callLambdaProxy(method, path, body, token);
+                    } else {
+                        console.log('Lambda proxy failed, trying API Gateway...');
+                        return await callAPIGateway(method, path, body, token);
+                    }
+                } catch (fallbackError) {
+                    console.error('Both methods failed:', fallbackError);
+                    throw new Error(`API call failed: ${error.message}`);
+                }
+            }
+        }
+
+        // Call API Gateway via proxy to avoid CORS issues
+        async function callAPIGateway(method, path, body = null, token = null) {
+            const url = `/api-proxy${path}`;
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const options = {
+                method: method,
+                headers: headers
+            };
+
+            if (body && (method === 'POST' || method === 'PUT')) {
+                options.body = JSON.stringify(body);
+            }
+
+            console.log(`Making ${method} request to: ${url} (via proxy)`);
+            console.log('Headers:', headers);
+            if (body) console.log('Body:', body);
+
+            const response = await fetch(url, options);
+            
+            console.log(`Response status: ${response.status}`);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                throw new Error(`API Gateway request failed: ${response.status} ${response.statusText} - ${errorText}`);
+            }
+
+            const result = await response.json();
+            console.log('Response data:', result);
+            
+            return {
+                statusCode: response.status,
+                ...result
+            };
+        }
+
+        // Call Lambda via proxy (fallback method)
+        async function callLambdaProxy(method, path, body = null, token = null) {
+            // Create Lambda event payload matching API Gateway v2 format
+            const event = {
+                version: "2.0",
+                routeKey: `${method} ${path}`,
+                rawPath: path.split('?')[0],
+                rawQueryString: path.includes('?') ? path.split('?')[1] : '',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                requestContext: {
+                    http: {
+                        method: method,
+                        path: path,
+                        protocol: 'HTTP/1.1',
+                        sourceIp: '127.0.0.1'
+                    },
+                    stage: 'local',
+                    requestId: 'test-' + Date.now()
+                },
+                isBase64Encoded: false
+            };
+
+            // Add authorization header if token provided
+            if (token) {
+                event.headers.authorization = `Bearer ${token}`;
+            }
+
+            // Add body if provided
+            if (body) {
+                event.body = JSON.stringify(body);
+            }
+
+            // Handle query parameters
+            if (path.includes('?')) {
+                const [pathname, queryString] = path.split('?');
+                event.rawPath = pathname;
+                event.rawQueryString = queryString;
+                event.queryStringParameters = {};
+                
+                queryString.split('&').forEach(param => {
+                    const [key, value] = param.split('=');
+                    event.queryStringParameters[decodeURIComponent(key)] = decodeURIComponent(value);
+                });
+            }
+
+            // Use proxy server to avoid CORS issues
+            const response = await fetch(`${PROXY_ENDPOINT}/${LAMBDA_FUNCTION}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(event)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Lambda invocation failed: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            
+            // Parse the Lambda response
+            if (result.errorMessage) {
+                throw new Error(`Lambda error: ${result.errorMessage}`);
+            }
+
+            // Return the parsed response
+            return typeof result === 'string' ? JSON.parse(result) : result;
+        }
+
+
+        // Show response in the UI
+        function showResponse(statusCode, data) {
+            const responseSection = document.getElementById('response-section');
+            const statusBadge = document.getElementById('status-badge');
+            const responseContent = document.getElementById('response-content');
+
+            responseSection.style.display = 'block';
+
+            // Set status badge
+            statusBadge.textContent = `${statusCode}`;
+            statusBadge.className = 'status-badge';
+            
+            if (statusCode >= 200 && statusCode < 300) {
+                statusBadge.classList.add('status-success');
+            } else if (statusCode >= 400 && statusCode < 500) {
+                statusBadge.classList.add('status-error');
+            } else {
+                statusBadge.classList.add('status-info');
+            }
+
+            // Set response content
+            responseContent.textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>

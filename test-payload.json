@@ -1,0 +1,15 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /auth/signup",
+  "rawPath": "/auth/signup",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "requestContext": {
+    "http": {
+      "method": "POST",
+      "path": "/auth/signup"
+    }
+  },
+  "body": "{\"email\":\"test@example.com\",\"password\":\"password123\"}"
+}

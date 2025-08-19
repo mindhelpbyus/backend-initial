@@ -1,0 +1,6 @@
+aws-cdk-lib>=2.0.0
+aws-cdk.aws-apigatewayv2-alpha>=2.0.0a0
+aws-cdk.aws-apigatewayv2-integrations-alpha>=2.0.0a0
+constructs>=10.0.0
+requests>=2.31.0
+termcolor>=2.3.0
