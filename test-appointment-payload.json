@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /appointments",
+  "rawPath": "/appointments",
+  "rawQueryString": "",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "requestContext": {
+    "http": {
+      "method": "POST",
+      "path": "/appointments",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "127.0.0.1"
+    },
+    "stage": "local",
+    "requestId": "test-123"
+  },
+  "body": "{\"patientId\":\"test-patient-123\",\"doctorId\":\"test-doctor-456\",\"scheduleDate\":\"2025-08-22T10:00:00Z\",\"duration\":30,\"notes\":\"Test appointment\"}",
+  "isBase64Encoded": false
+}

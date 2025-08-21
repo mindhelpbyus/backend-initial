@@ -32,5 +32,16 @@ fi
 popd > /dev/null
 echo "Doctors lambda build complete."
 
+echo "Building appointments lambda..."
+pushd "$ROOT_DIR/src/lambdas/appointments" > /dev/null
+# Use root node_modules for TypeScript compilation
+PATH="$ROOT_DIR/node_modules/.bin:$PATH" npm run build
+if [ ! -d "dist" ]; then
+  echo "appointments dist not generated"
+  exit 1
+fi
+popd > /dev/null
+echo "Appointments lambda build complete."
+
 echo "All lambda builds complete."
 echo "Note: Dependencies will be bundled by CDK during deployment."

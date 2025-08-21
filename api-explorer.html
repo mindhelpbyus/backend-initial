@@ -492,6 +492,73 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="api-section">
+                    <h3>📅 Appointment Management</h3>
+                    <div class="api-item" onclick="selectAPI('getAppointments')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/appointments</div>
+                                <div class="api-description">Get all appointments with filters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('createAppointment')">
+                        <div class="api-header">
+                            <span class="method-badge method-post">POST</span>
+                            <div>
+                                <div class="api-path">/appointments</div>
+                                <div class="api-description">Create a new appointment</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('getAppointmentById')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/appointments/{appointmentId}</div>
+                                <div class="api-description">Get appointment by ID</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('updateAppointment')">
+                        <div class="api-header">
+                            <span class="method-badge method-put">PUT</span>
+                            <div>
+                                <div class="api-path">/appointments/{appointmentId}</div>
+                                <div class="api-description">Update appointment details</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('cancelAppointment')">
+                        <div class="api-header">
+                            <span class="method-badge method-delete">DELETE</span>
+                            <div>
+                                <div class="api-path">/appointments/{appointmentId}</div>
+                                <div class="api-description">Cancel appointment</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('getPatientAppointments')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/appointments/patient</div>
+                                <div class="api-description">Get appointments for a patient</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-item" onclick="selectAPI('getDoctorAppointments')">
+                        <div class="api-header">
+                            <span class="method-badge method-get">GET</span>
+                            <div>
+                                <div class="api-path">/appointments/doctor</div>
+                                <div class="api-description">Get appointments for a doctor</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="test-panel">
@@ -839,6 +906,168 @@
                     <button class="btn" onclick="executeAPI('getDoctorBySpecialization')">Search Doctors</button>
                 </div>
 
+                <!-- Get Appointments Form -->
+                <div id="getAppointments-form" class="test-form">
+                    <h2>📅 Get All Appointments</h2>
+                    <div class="form-group">
+                        <label for="appointments-status">Filter by Status</label>
+                        <select id="appointments-status">
+                            <option value="">All statuses</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="no-show">No Show</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointments-fromDate">From Date</label>
+                        <input type="datetime-local" id="appointments-fromDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointments-toDate">To Date</label>
+                        <input type="datetime-local" id="appointments-toDate">
+                    </div>
+                    <button class="btn" onclick="executeAPI('getAppointments')">Get Appointments</button>
+                </div>
+
+                <!-- Create Appointment Form -->
+                <div id="createAppointment-form" class="test-form">
+                    <h2>📅 Create Appointment</h2>
+                    <div class="form-group">
+                        <label for="appointment-patientId">Patient ID *</label>
+                        <input type="text" id="appointment-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-doctorId">Doctor ID *</label>
+                        <input type="text" id="appointment-doctorId" placeholder="Enter doctor ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-scheduleDate">Schedule Date & Time *</label>
+                        <input type="datetime-local" id="appointment-scheduleDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-duration">Duration (minutes)</label>
+                        <input type="number" id="appointment-duration" placeholder="30" min="15" max="180" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-videoLink">Video Link</label>
+                        <input type="url" id="appointment-videoLink" placeholder="https://meet.example.com/room123">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-paymentAmount">Payment Amount</label>
+                        <input type="number" id="appointment-paymentAmount" placeholder="100.00" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-notes">Notes</label>
+                        <textarea id="appointment-notes" placeholder="Additional notes for the appointment..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-symptoms">Symptoms (comma-separated)</label>
+                        <input type="text" id="appointment-symptoms" placeholder="headache, fever, fatigue">
+                    </div>
+                    <button class="btn" onclick="executeAPI('createAppointment')">Create Appointment</button>
+                </div>
+
+                <!-- Get Appointment By ID Form -->
+                <div id="getAppointmentById-form" class="test-form">
+                    <h2>📅 Get Appointment by ID</h2>
+                    <div class="form-group">
+                        <label for="get-appointmentId">Appointment ID *</label>
+                        <input type="text" id="get-appointmentId" placeholder="Enter appointment ID" required>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getAppointmentById')">Get Appointment</button>
+                </div>
+
+                <!-- Update Appointment Form -->
+                <div id="updateAppointment-form" class="test-form">
+                    <h2>✏️ Update Appointment</h2>
+                    <div class="form-group">
+                        <label for="update-appointmentId">Appointment ID *</label>
+                        <input type="text" id="update-appointmentId" placeholder="Enter appointment ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-appointment-status">Status</label>
+                        <select id="update-appointment-status">
+                            <option value="">No change</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="no-show">No Show</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-appointment-scheduleDate">Schedule Date & Time</label>
+                        <input type="datetime-local" id="update-appointment-scheduleDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-appointment-duration">Duration (minutes)</label>
+                        <input type="number" id="update-appointment-duration" placeholder="30" min="15" max="180">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-appointment-videoLink">Video Link</label>
+                        <input type="url" id="update-appointment-videoLink" placeholder="https://meet.example.com/room123">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-appointment-notes">Notes</label>
+                        <textarea id="update-appointment-notes" placeholder="Updated notes..."></textarea>
+                    </div>
+                    <button class="btn" onclick="executeAPI('updateAppointment')">Update Appointment</button>
+                </div>
+
+                <!-- Cancel Appointment Form -->
+                <div id="cancelAppointment-form" class="test-form">
+                    <h2>🗑️ Cancel Appointment</h2>
+                    <div class="form-group">
+                        <label for="cancel-appointmentId">Appointment ID *</label>
+                        <input type="text" id="cancel-appointmentId" placeholder="Enter appointment ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cancel-patientId">Patient ID *</label>
+                        <input type="text" id="cancel-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <button class="btn btn-danger" onclick="executeAPI('cancelAppointment')">Cancel Appointment</button>
+                </div>
+
+                <!-- Get Patient Appointments Form -->
+                <div id="getPatientAppointments-form" class="test-form">
+                    <h2>📅 Get Patient Appointments</h2>
+                    <div class="form-group">
+                        <label for="patient-appointments-patientId">Patient ID *</label>
+                        <input type="text" id="patient-appointments-patientId" placeholder="Enter patient ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-appointments-status">Filter by Status</label>
+                        <select id="patient-appointments-status">
+                            <option value="">All statuses</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="no-show">No Show</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getPatientAppointments')">Get Patient Appointments</button>
+                </div>
+
+                <!-- Get Doctor Appointments Form -->
+                <div id="getDoctorAppointments-form" class="test-form">
+                    <h2>📅 Get Doctor Appointments</h2>
+                    <div class="form-group">
+                        <label for="doctor-appointments-doctorId">Doctor ID *</label>
+                        <input type="text" id="doctor-appointments-doctorId" placeholder="Enter doctor ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor-appointments-status">Filter by Status</label>
+                        <select id="doctor-appointments-status">
+                            <option value="">All statuses</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="no-show">No Show</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="executeAPI('getDoctorAppointments')">Get Doctor Appointments</button>
+                </div>
+
                 <!-- Response Section -->
                 <div id="response-section" class="response-section" style="display: none;">
                     <div class="response-header">
@@ -862,6 +1091,7 @@
         const API_BASE_URL = 'https://unknown.execute-api.localhost.localstack.cloud:4566';
         const PATIENTS_LAMBDA_FUNCTION = 'TelehealthBackend-dev-PatientsLambda2BB68394-9ead4f5b';
         const DOCTORS_LAMBDA_FUNCTION = 'TelehealthBackend-dev-DoctorsLambda94A0C7B8-24715eb3';
+        const APPOINTMENTS_LAMBDA_FUNCTION = 'TelehealthBackend-dev-AppointmentsLambda8428FB-48ddec66';
         const PROXY_ENDPOINT = '/lambda-proxy'; // Proxy endpoint on same origin
         const USE_API_GATEWAY = false; // Flag to use API Gateway instead of direct Lambda (disabled due to LocalStack limitations)
 
@@ -1009,6 +1239,27 @@
                         break;
                     case 'getDoctorBySpecialization':
                         response = await handleGetDoctorBySpecialization();
+                        break;
+                    case 'getAppointments':
+                        response = await handleGetAppointments();
+                        break;
+                    case 'createAppointment':
+                        response = await handleCreateAppointment();
+                        break;
+                    case 'getAppointmentById':
+                        response = await handleGetAppointmentById();
+                        break;
+                    case 'updateAppointment':
+                        response = await handleUpdateAppointment();
+                        break;
+                    case 'cancelAppointment':
+                        response = await handleCancelAppointment();
+                        break;
+                    case 'getPatientAppointments':
+                        response = await handleGetPatientAppointments();
+                        break;
+                    case 'getDoctorAppointments':
+                        response = await handleGetDoctorAppointments();
                         break;
                     default:
                         throw new Error('Unknown API endpoint');
@@ -1282,10 +1533,133 @@
             return await invokeLambda('GET', `/doctors/by-specialization?specialization=${encodeURIComponent(specialization)}`);
         }
 
+        // Appointment API Handler Functions
+        async function handleGetAppointments() {
+            const status = document.getElementById('appointments-status').value;
+            const fromDate = document.getElementById('appointments-fromDate').value;
+            const toDate = document.getElementById('appointments-toDate').value;
+
+            let queryParams = [];
+            if (status) queryParams.push(`status=${encodeURIComponent(status)}`);
+            if (fromDate) queryParams.push(`fromDate=${encodeURIComponent(fromDate)}`);
+            if (toDate) queryParams.push(`toDate=${encodeURIComponent(toDate)}`);
+
+            const queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+            return await invokeLambda('GET', `/appointments${queryString}`, null, authToken);
+        }
+
+        async function handleCreateAppointment() {
+            const patientId = document.getElementById('appointment-patientId').value;
+            const doctorId = document.getElementById('appointment-doctorId').value;
+            const scheduleDate = document.getElementById('appointment-scheduleDate').value;
+            const duration = document.getElementById('appointment-duration').value;
+            const videoLink = document.getElementById('appointment-videoLink').value;
+            const paymentAmount = document.getElementById('appointment-paymentAmount').value;
+            const notes = document.getElementById('appointment-notes').value;
+            const symptoms = document.getElementById('appointment-symptoms').value;
+
+            if (!patientId || !doctorId || !scheduleDate) {
+                throw new Error('Patient ID, Doctor ID, and Schedule Date are required');
+            }
+
+            const appointmentData = {
+                patientId,
+                doctorId,
+                scheduleDate
+            };
+
+            if (duration) appointmentData.duration = parseInt(duration);
+            if (videoLink) appointmentData.videoLink = videoLink;
+            if (paymentAmount) appointmentData.paymentAmount = parseFloat(paymentAmount);
+            if (notes) appointmentData.notes = notes;
+            if (symptoms) appointmentData.symptoms = symptoms.split(',').map(s => s.trim()).filter(s => s);
+
+            return await invokeLambda('POST', '/appointments', appointmentData, authToken);
+        }
+
+        async function handleGetAppointmentById() {
+            const appointmentId = document.getElementById('get-appointmentId').value;
+
+            if (!appointmentId) {
+                throw new Error('Appointment ID is required');
+            }
+
+            return await invokeLambda('GET', `/appointments/${appointmentId}`, null, authToken);
+        }
+
+        async function handleUpdateAppointment() {
+            const appointmentId = document.getElementById('update-appointmentId').value;
+            const status = document.getElementById('update-appointment-status').value;
+            const scheduleDate = document.getElementById('update-appointment-scheduleDate').value;
+            const duration = document.getElementById('update-appointment-duration').value;
+            const videoLink = document.getElementById('update-appointment-videoLink').value;
+            const notes = document.getElementById('update-appointment-notes').value;
+
+            if (!appointmentId) {
+                throw new Error('Appointment ID is required');
+            }
+
+            const updateData = {};
+            if (status) updateData.appointmentStatus = status;
+            if (scheduleDate) updateData.scheduleDate = scheduleDate;
+            if (duration) updateData.duration = parseInt(duration);
+            if (videoLink) updateData.videoLink = videoLink;
+            if (notes) updateData.notes = notes;
+
+            if (Object.keys(updateData).length === 0) {
+                throw new Error('At least one field must be provided for update');
+            }
+
+            return await invokeLambda('PUT', `/appointments/${appointmentId}`, updateData, authToken);
+        }
+
+        async function handleCancelAppointment() {
+            const appointmentId = document.getElementById('cancel-appointmentId').value;
+            const patientId = document.getElementById('cancel-patientId').value;
+
+            if (!appointmentId || !patientId) {
+                throw new Error('Appointment ID and Patient ID are required');
+            }
+
+            return await invokeLambda('DELETE', `/appointments/${appointmentId}?patientId=${encodeURIComponent(patientId)}`, null, authToken);
+        }
+
+        async function handleGetPatientAppointments() {
+            const patientId = document.getElementById('patient-appointments-patientId').value;
+            const status = document.getElementById('patient-appointments-status').value;
+
+            if (!patientId) {
+                throw new Error('Patient ID is required');
+            }
+
+            let queryParams = [`patientId=${encodeURIComponent(patientId)}`];
+            if (status) queryParams.push(`status=${encodeURIComponent(status)}`);
+
+            const queryString = '?' + queryParams.join('&');
+            return await invokeLambda('GET', `/appointments/patient${queryString}`, null, authToken);
+        }
+
+        async function handleGetDoctorAppointments() {
+            const doctorId = document.getElementById('doctor-appointments-doctorId').value;
+            const status = document.getElementById('doctor-appointments-status').value;
+
+            if (!doctorId) {
+                throw new Error('Doctor ID is required');
+            }
+
+            let queryParams = [`doctorId=${encodeURIComponent(doctorId)}`];
+            if (status) queryParams.push(`status=${encodeURIComponent(status)}`);
+
+            const queryString = '?' + queryParams.join('&');
+            return await invokeLambda('GET', `/appointments/doctor${queryString}`, null, authToken);
+        }
+
         // Determine which lambda function to use based on the path
         function getLambdaFunction(path) {
             if (path.startsWith('/doctors')) {
                 return DOCTORS_LAMBDA_FUNCTION;
+            } else if (path.startsWith('/appointments')) {
+                return APPOINTMENTS_LAMBDA_FUNCTION;
             } else {
                 return PATIENTS_LAMBDA_FUNCTION;
             }

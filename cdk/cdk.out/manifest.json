@@ -24,7 +24,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-deploy-role-000000000000-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-cfn-exec-role-000000000000-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/649effb38e7ebfea3e1ca999030924b0274cb82bf08c60af03e5cfd5dd8e15dd.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -91,6 +91,20 @@
             "data": "DoctorsTable4E450B5B"
           }
         ],
+        "/TelehealthBackend-dev/AppointmentsTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "AppointmentsTable8553CB1E"
+            }
+          }
+        ],
+        "/TelehealthBackend-dev/AppointmentsTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppointmentsTable8553CB1E"
+          }
+        ],
         "/TelehealthBackend-dev/LambdaExecutionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -113,6 +127,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsLambda94A0C7B8"
+          }
+        ],
+        "/TelehealthBackend-dev/AppointmentsLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppointmentsLambda8428FB86"
           }
         ],
         "/TelehealthBackend-dev/TelehealthAPI/Resource": [
@@ -343,6 +363,96 @@
             "data": "TelehealthAPIGETdoctorsbyspecialization9223599F"
           }
         ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsAppointmentsIntegration0FAD6E1F"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsAppointmentsIntegrationPermission17666BBA"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointments77C8C072"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--appointments/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTappointmentsAppointmentsIntegrationPermission4BDD8A61"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--appointments/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTappointmentsC9E0B246"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsappointmentIdAppointmentsIntegrationPermissionE608AB1D"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsappointmentId3B598DFF"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPUTappointmentsappointmentIdAppointmentsIntegrationPermissionADD2CEBB"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPUTappointmentsappointmentId239ACFDB"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIDELETEappointmentsappointmentIdAppointmentsIntegrationPermission1AA1FE9E"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIDELETEappointmentsappointmentId60604D38"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentspatientAppointmentsIntegrationPermissionE33DE050"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentspatientA0336234"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/AppointmentsIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsdoctorAppointmentsIntegrationPermission7393F74E"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETappointmentsdoctor7159B295"
+          }
+        ],
         "/TelehealthBackend-dev/ApiUrl": [
           {
             "type": "aws:cdk:logicalId",
@@ -371,6 +481,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsLambdaArn"
+          }
+        ],
+        "/TelehealthBackend-dev/AppointmentsTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppointmentsTableName"
+          }
+        ],
+        "/TelehealthBackend-dev/AppointmentsLambdaArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppointmentsLambdaArn"
           }
         ],
         "/TelehealthBackend-dev/CDKMetadata/Default": [

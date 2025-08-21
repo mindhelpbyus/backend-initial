@@ -163,22 +163,51 @@ class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(error_response).encode())
 
+def find_available_port(start_port=8080, max_attempts=10):
+    """Find an available port starting from start_port"""
+    import socket
+    
+    for port in range(start_port, start_port + max_attempts):
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.bind(('', port))
+                return port
+        except OSError:
+            continue
+    
+    raise OSError(f"No available ports found in range {start_port}-{start_port + max_attempts - 1}")
+
 def main():
-    PORT = 8080
+    # Find an available port
+    try:
+        PORT = find_available_port()
+    except OSError as e:
+        print(f"❌ Error: {e}")
+        return 1
     
     # Change to the project root directory
     os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
-    with socketserver.TCPServer(("", PORT), CORSHTTPRequestHandler) as httpd:
-        print(f"🚀 API Explorer server running at http://localhost:{PORT}")
-        print(f"📁 Serving files from: {os.getcwd()}")
-        print(f"🔗 Open http://localhost:{PORT}/api-explorer.html in your browser")
-        print("Press Ctrl+C to stop the server")
-        
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\n🛑 Server stopped")
+    try:
+        with socketserver.TCPServer(("", PORT), CORSHTTPRequestHandler) as httpd:
+            print(f"🚀 API Explorer server running at http://localhost:{PORT}")
+            print(f"📁 Serving files from: {os.getcwd()}")
+            print(f"🔗 Open http://localhost:{PORT}/api-explorer.html in your browser")
+            print("Press Ctrl+C to stop the server")
+            
+            try:
+                httpd.serve_forever()
+            except KeyboardInterrupt:
+                print("\n🛑 Server stopped")
+                return 0
+    except OSError as e:
+        if e.errno == 48:  # Address already in use
+            print(f"❌ Error: Port {PORT} is already in use")
+            print("💡 Try killing any existing processes or wait a moment and try again")
+            return 1
+        else:
+            print(f"❌ Error starting server: {e}")
+            return 1
 
 if __name__ == "__main__":
     main()

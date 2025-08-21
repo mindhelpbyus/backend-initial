@@ -81,6 +81,58 @@ class TelehealthBackendStack(Stack):
             )
         )
 
+        # Create Appointments Table
+        appointments_table = dynamodb.Table(
+            self, "AppointmentsTable",
+            table_name="AppointmentsTable",
+            partition_key=dynamodb.Attribute(
+                name="appointmentId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY,
+            point_in_time_recovery=True
+        )
+
+        # Add GSI for patient-based lookups
+        appointments_table.add_global_secondary_index(
+            index_name="patient-index",
+            partition_key=dynamodb.Attribute(
+                name="patientId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="scheduleDate",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
+        # Add GSI for doctor-based lookups
+        appointments_table.add_global_secondary_index(
+            index_name="doctor-index",
+            partition_key=dynamodb.Attribute(
+                name="doctorId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="scheduleDate",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
+        # Add GSI for status-based lookups
+        appointments_table.add_global_secondary_index(
+            index_name="status-index",
+            partition_key=dynamodb.Attribute(
+                name="appointmentStatus",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="createdAt",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
         lambda_role = iam.Role(
             self, "LambdaExecutionRole",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -91,6 +143,7 @@ class TelehealthBackendStack(Stack):
 
         patients_table.grant_read_write_data(lambda_role)
         doctors_table.grant_read_write_data(lambda_role)
+        appointments_table.grant_read_write_data(lambda_role)
 
         patients_lambda = _lambda.Function(
             self, "PatientsLambda",
@@ -121,6 +174,21 @@ class TelehealthBackendStack(Stack):
             }
         )
 
+        # Create Appointments Lambda
+        appointments_lambda = _lambda.Function(
+            self, "AppointmentsLambda",
+            runtime=_lambda.Runtime.NODEJS_18_X,
+            handler="dist/handler.handler",
+            code=_lambda.Code.from_asset("../src/lambdas/appointments"),
+            role=lambda_role,
+            timeout=Duration.seconds(30),
+            environment={
+                "APPOINTMENTS_TABLE": appointments_table.table_name,
+                "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
+                "REGION": self.region
+            }
+        )
+
         http_api = apigw.HttpApi(
             self, "TelehealthAPI",
             cors_preflight={
@@ -139,6 +207,11 @@ class TelehealthBackendStack(Stack):
         doctors_integration = apigw_integrations.HttpLambdaIntegration(
             "DoctorsIntegration",
             doctors_lambda
+        )
+
+        appointments_integration = apigw_integrations.HttpLambdaIntegration(
+            "AppointmentsIntegration",
+            appointments_lambda
         )
 
         # Auth routes (handled by patients lambda)
@@ -210,9 +283,36 @@ class TelehealthBackendStack(Stack):
             integration=doctors_integration
         )
 
+        # Appointment routes
+        http_api.add_routes(
+            path="/appointments",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.POST],
+            integration=appointments_integration
+        )
+
+        http_api.add_routes(
+            path="/appointments/{appointmentId}",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.PUT, apigw.HttpMethod.DELETE],
+            integration=appointments_integration
+        )
+
+        http_api.add_routes(
+            path="/appointments/patient",
+            methods=[apigw.HttpMethod.GET],
+            integration=appointments_integration
+        )
+
+        http_api.add_routes(
+            path="/appointments/doctor",
+            methods=[apigw.HttpMethod.GET],
+            integration=appointments_integration
+        )
+
         # Outputs
         CfnOutput(self, "ApiUrl", value=http_api.url)
         CfnOutput(self, "PatientsTableName", value=patients_table.table_name)
         CfnOutput(self, "PatientsLambdaArn", value=patients_lambda.function_arn)
         CfnOutput(self, "DoctorsTableName", value=doctors_table.table_name)
         CfnOutput(self, "DoctorsLambdaArn", value=doctors_lambda.function_arn)
+        CfnOutput(self, "AppointmentsTableName", value=appointments_table.table_name)
+        CfnOutput(self, "AppointmentsLambdaArn", value=appointments_lambda.function_arn)
