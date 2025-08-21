@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Comprehensive curl test script for local APIs
-# This script tests all available endpoints in the patients API
+# This script tests all available endpoints in the healthcare API (patients & doctors)
 
 set -e
 
@@ -204,6 +204,79 @@ test_patient_subresources() {
     curl_test "POST" "/patients/$PATIENT_ID/reviews" "$review_data" "Authorization: Bearer $TOKEN" "Add Patient Review"
 }
 
+# Test Doctor Endpoints
+test_doctors() {
+    print_header "Testing Doctor Endpoints"
+    
+    # Test Get All Doctors (public access)
+    curl_test "GET" "/doctors" "" "" "Get All Doctors (public)"
+    
+    # Test Create Doctor (requires admin)
+    local doctor_data="{\"email\":\"doctor-$(date +%s)@example.com\",\"firstName\":\"Dr. John\",\"lastName\":\"Smith\",\"specialization\":\"Cardiology\",\"licenseNumber\":\"MD$(date +%s)\",\"phoneNumber\":\"+1-555-0123\",\"experience\":10}"
+    curl_test "POST" "/doctors" "$doctor_data" "Authorization: Bearer $TOKEN" "Create Doctor (should fail - not admin)"
+    
+    if [ -n "$ADMIN_TOKEN" ]; then
+        local admin_doctor_response=$(curl_test "POST" "/doctors" "$doctor_data" "Authorization: Bearer $ADMIN_TOKEN" "Create Doctor (admin)")
+        DOCTOR_ID=$(echo "$admin_doctor_response" | grep -o '"doctorId":"[^"]*"' | cut -d'"' -f4)
+        
+        if [ -n "$DOCTOR_ID" ]; then
+            print_success "Doctor created with ID: $DOCTOR_ID"
+            
+            # Test Get Doctor by ID
+            curl_test "GET" "/doctors/$DOCTOR_ID" "" "" "Get Doctor by ID"
+            
+            # Test Update Doctor (admin)
+            local update_doctor_data="{\"firstName\":\"Dr. Jane\",\"experience\":15}"
+            curl_test "PUT" "/doctors/$DOCTOR_ID" "$update_doctor_data" "Authorization: Bearer $ADMIN_TOKEN" "Update Doctor (admin)"
+            
+            # Test Update Doctor (non-admin, should fail)
+            curl_test "PUT" "/doctors/$DOCTOR_ID" "$update_doctor_data" "Authorization: Bearer $TOKEN" "Update Doctor (should fail - not admin)"
+        fi
+    fi
+    
+    # Test Get Doctors by Specialization
+    curl_test "GET" "/doctors/by-specialization?specialization=Cardiology" "" "" "Get Doctors by Specialization"
+    
+    # Test Get Doctors by Email
+    local test_doctor_email="doctor-$(date +%s)@example.com"
+    curl_test "GET" "/doctors/by-email?email=$test_doctor_email" "" "" "Get Doctors by Email (non-existent)"
+    
+    # Test missing query parameters
+    curl_test "GET" "/doctors/by-specialization" "" "" "Get Doctors by Specialization (missing param - should fail)"
+    curl_test "GET" "/doctors/by-email" "" "" "Get Doctors by Email (missing param - should fail)"
+    
+    # Test Delete Doctor (requires admin)
+    if [ -n "$DOCTOR_ID" ] && [ -n "$ADMIN_TOKEN" ]; then
+        curl_test "DELETE" "/doctors/$DOCTOR_ID" "" "Authorization: Bearer $TOKEN" "Delete Doctor (should fail - not admin)"
+        curl_test "DELETE" "/doctors/$DOCTOR_ID" "" "Authorization: Bearer $ADMIN_TOKEN" "Delete Doctor (admin)"
+    fi
+}
+
+# Test Doctor Error Cases
+test_doctor_error_cases() {
+    print_header "Testing Doctor Error Cases"
+    
+    # Test invalid doctor ID
+    curl_test "GET" "/doctors/invalid-doctor-id" "" "" "Get Non-existent Doctor"
+    
+    # Test create doctor with missing fields
+    local incomplete_doctor="{\"email\":\"incomplete@example.com\"}"
+    if [ -n "$ADMIN_TOKEN" ]; then
+        curl_test "POST" "/doctors" "$incomplete_doctor" "Authorization: Bearer $ADMIN_TOKEN" "Create Doctor with missing fields (should fail)"
+    fi
+    
+    # Test create doctor with invalid email
+    local invalid_email_doctor="{\"email\":\"invalid-email\",\"firstName\":\"Test\",\"lastName\":\"Doctor\",\"specialization\":\"Cardiology\",\"licenseNumber\":\"MD123\"}"
+    if [ -n "$ADMIN_TOKEN" ]; then
+        curl_test "POST" "/doctors" "$invalid_email_doctor" "Authorization: Bearer $ADMIN_TOKEN" "Create Doctor with invalid email (should fail)"
+    fi
+    
+    # Test unauthorized doctor operations
+    curl_test "POST" "/doctors" "{\"email\":\"test@example.com\"}" "" "Create Doctor without auth (should fail)"
+    curl_test "PUT" "/doctors/123" "{\"firstName\":\"Test\"}" "" "Update Doctor without auth (should fail)"
+    curl_test "DELETE" "/doctors/123" "" "" "Delete Doctor without auth (should fail)"
+}
+
 # Test Error Cases
 test_error_cases() {
     print_header "Testing Error Cases"
@@ -240,7 +313,7 @@ test_method_variations() {
 main() {
     echo -e "${BLUE}"
     echo "=================================================="
-    echo "  Comprehensive API Testing with curl"
+    echo "  Comprehensive Healthcare API Testing with curl"
     echo "=================================================="
     echo -e "${NC}"
     
@@ -248,6 +321,8 @@ main() {
     test_auth
     test_patients
     test_patient_subresources
+    test_doctors
+    test_doctor_error_cases
     test_error_cases
     test_method_variations
     
@@ -267,7 +342,11 @@ main() {
         print_info "Test Patient ID: $PATIENT_ID"
     fi
     
-    echo -e "\n${GREEN}🎉 Testing complete!${NC}"
+    if [ -n "$DOCTOR_ID" ]; then
+        print_info "Test Doctor ID: $DOCTOR_ID"
+    fi
+    
+    echo -e "\n${GREEN}🎉 Healthcare API testing complete!${NC}"
 }
 
 # Run main function

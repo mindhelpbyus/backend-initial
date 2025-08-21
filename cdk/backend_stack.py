@@ -40,6 +40,45 @@ class TelehealthBackendStack(Stack):
             )
         )
 
+        # Create Doctors Table
+        doctors_table = dynamodb.Table(
+            self, "DoctorsTable",
+            table_name="DoctorsTable",
+            partition_key=dynamodb.Attribute(
+                name="doctorId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY,
+            point_in_time_recovery=True
+        )
+
+        # Add GSI for email-based lookups
+        doctors_table.add_global_secondary_index(
+            index_name="email-index",
+            partition_key=dynamodb.Attribute(
+                name="email",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="createdAt",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
+        # Add GSI for specialization-based lookups
+        doctors_table.add_global_secondary_index(
+            index_name="specialization-index",
+            partition_key=dynamodb.Attribute(
+                name="specialization",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="createdAt",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
         lambda_role = iam.Role(
             self, "LambdaExecutionRole",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -49,6 +88,7 @@ class TelehealthBackendStack(Stack):
         )
 
         patients_table.grant_read_write_data(lambda_role)
+        doctors_table.grant_read_write_data(lambda_role)
 
         patients_lambda = _lambda.Function(
             self, "PatientsLambda",
@@ -59,6 +99,21 @@ class TelehealthBackendStack(Stack):
             timeout=Duration.seconds(30),
             environment={
                 "PATIENTS_TABLE": patients_table.table_name,
+                "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
+                "REGION": self.region
+            }
+        )
+
+        # Create Doctors Lambda
+        doctors_lambda = _lambda.Function(
+            self, "DoctorsLambda",
+            runtime=_lambda.Runtime.NODEJS_18_X,
+            handler="dist/handler.handler",
+            code=_lambda.Code.from_asset("../src/lambdas/doctors"),
+            role=lambda_role,
+            timeout=Duration.seconds(30),
+            environment={
+                "DOCTORS_TABLE": doctors_table.table_name,
                 "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
                 "REGION": self.region
             }
@@ -79,6 +134,12 @@ class TelehealthBackendStack(Stack):
             patients_lambda
         )
 
+        doctors_integration = apigw_integrations.HttpLambdaIntegration(
+            "DoctorsIntegration",
+            doctors_lambda
+        )
+
+        # Auth routes (handled by patients lambda)
         http_api.add_routes(
             path="/auth/signup",
             methods=[apigw.HttpMethod.POST],
@@ -91,6 +152,7 @@ class TelehealthBackendStack(Stack):
             integration=patients_integration
         )
 
+        # Patient routes
         http_api.add_routes(
             path="/patients",
             methods=[apigw.HttpMethod.GET, apigw.HttpMethod.POST],
@@ -121,6 +183,34 @@ class TelehealthBackendStack(Stack):
             integration=patients_integration
         )
 
+        # Doctor routes
+        http_api.add_routes(
+            path="/doctors",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.POST],
+            integration=doctors_integration
+        )
+
+        http_api.add_routes(
+            path="/doctors/{doctorId}",
+            methods=[apigw.HttpMethod.GET, apigw.HttpMethod.PUT, apigw.HttpMethod.DELETE],
+            integration=doctors_integration
+        )
+
+        http_api.add_routes(
+            path="/doctors/by-email",
+            methods=[apigw.HttpMethod.GET],
+            integration=doctors_integration
+        )
+
+        http_api.add_routes(
+            path="/doctors/by-specialization",
+            methods=[apigw.HttpMethod.GET],
+            integration=doctors_integration
+        )
+
+        # Outputs
         CfnOutput(self, "ApiUrl", value=http_api.url)
         CfnOutput(self, "PatientsTableName", value=patients_table.table_name)
         CfnOutput(self, "PatientsLambdaArn", value=patients_lambda.function_arn)
+        CfnOutput(self, "DoctorsTableName", value=doctors_table.table_name)
+        CfnOutput(self, "DoctorsLambdaArn", value=doctors_lambda.function_arn)

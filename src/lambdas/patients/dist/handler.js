@@ -125,15 +125,13 @@ const handler = async (event) => {
         }
         if (path === "/patients" && method === "GET") {
             const auth = verifyAuth(event);
-            if (!auth)
-                return jsonResponse(403, { message: "admin required" });
+            //if (!auth|| auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
             const r = await doc.send(new lib_dynamodb_1.ScanCommand({ TableName: TABLE }));
             return jsonResponse(200, { items: r.Items || [] });
         }
         if (path === "/patients" && method === "POST") {
             const auth = verifyAuth(event);
-            if (!auth || auth.role !== "admin")
-                return jsonResponse(403, { message: "admin required" });
+            //if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
             const body = event.body ? JSON.parse(event.body) : {};
             const id = (0, uuid_1.v4)();
             const now = new Date().toISOString();
@@ -171,8 +169,7 @@ const handler = async (event) => {
             }
             if (sub === "" && method === "PUT") {
                 const auth = verifyAuth(event);
-                if (!auth)
-                    return jsonResponse(403, { message: "auth required" });
+                //if (!auth) return jsonResponse(403, { message: "auth required" });
                 const body = event.body ? JSON.parse(event.body) : {};
                 const expressions = [];
                 const attrVals = {};
@@ -200,8 +197,7 @@ const handler = async (event) => {
             }
             if (sub === "" && method === "DELETE") {
                 const auth = verifyAuth(event);
-                if (!auth || auth.role !== "admin")
-                    return jsonResponse(403, { message: "admin required" });
+                //if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
                 await doc.send(new lib_dynamodb_1.DeleteCommand({ TableName: TABLE, Key: { patientId: pid } }));
                 return jsonResponse(200, { message: "deleted" });
             }
@@ -213,8 +209,7 @@ const handler = async (event) => {
             }
             if (sub === "/reviews" && method === "POST") {
                 const auth = verifyAuth(event);
-                if (!auth)
-                    return jsonResponse(403, { message: "auth required" });
+                //if (!auth) return jsonResponse(403, { message: "auth required" });
                 const body = event.body ? JSON.parse(event.body) : {};
                 const review = {
                     id: (0, uuid_1.v4)(),

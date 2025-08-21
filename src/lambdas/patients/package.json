@@ -5,7 +5,11 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:unit": "jest --selectProjects unit",
+    "test:integration": "jest --selectProjects integration",
+    "test:watch": "jest --watch",
+    "test:unit:watch": "jest --selectProjects unit --watch",
+    "test:integration:watch": "jest --selectProjects integration --watch"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.400.0",

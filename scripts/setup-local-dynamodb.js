@@ -78,13 +78,109 @@ async function createPatientsTable() {
       await new Promise(resolve => setTimeout(resolve, 1000));
       const describeResult = await client.send(new DescribeTableCommand({ TableName: "PatientsTable" }));
       tableStatus = describeResult.Table.TableStatus;
-      console.log("Table status:", tableStatus);
+      console.log("PatientsTable status:", tableStatus);
     }
     
     console.log("PatientsTable is now active and ready to use!");
     
   } catch (error) {
-    console.error("Error creating table:", error);
+    console.error("Error creating PatientsTable:", error);
+    process.exit(1);
+  }
+}
+
+async function createDoctorsTable() {
+  try {
+    // Check if table already exists
+    try {
+      await client.send(new DescribeTableCommand({ TableName: "DoctorsTable" }));
+      console.log("DoctorsTable already exists");
+      return;
+    } catch (error) {
+      // Table doesn't exist, create it
+    }
+
+    const createTableParams = {
+      TableName: "DoctorsTable",
+      KeySchema: [
+        {
+          AttributeName: "doctorId",
+          KeyType: "HASH"
+        }
+      ],
+      AttributeDefinitions: [
+        {
+          AttributeName: "doctorId",
+          AttributeType: "S"
+        },
+        {
+          AttributeName: "email",
+          AttributeType: "S"
+        },
+        {
+          AttributeName: "specialization",
+          AttributeType: "S"
+        },
+        {
+          AttributeName: "createdAt",
+          AttributeType: "S"
+        }
+      ],
+      GlobalSecondaryIndexes: [
+        {
+          IndexName: "email-index",
+          KeySchema: [
+            {
+              AttributeName: "email",
+              KeyType: "HASH"
+            },
+            {
+              AttributeName: "createdAt",
+              KeyType: "RANGE"
+            }
+          ],
+          Projection: {
+            ProjectionType: "ALL"
+          },
+          BillingMode: "PAY_PER_REQUEST"
+        },
+        {
+          IndexName: "specialization-index",
+          KeySchema: [
+            {
+              AttributeName: "specialization",
+              KeyType: "HASH"
+            },
+            {
+              AttributeName: "createdAt",
+              KeyType: "RANGE"
+            }
+          ],
+          Projection: {
+            ProjectionType: "ALL"
+          },
+          BillingMode: "PAY_PER_REQUEST"
+        }
+      ],
+      BillingMode: "PAY_PER_REQUEST"
+    };
+
+    const result = await client.send(new CreateTableCommand(createTableParams));
+    console.log("DoctorsTable created successfully:", result.TableDescription.TableName);
+    
+    // Wait for table to be active
+    let tableStatus = "CREATING";
+    while (tableStatus !== "ACTIVE") {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const describeResult = await client.send(new DescribeTableCommand({ TableName: "DoctorsTable" }));
+      tableStatus = describeResult.Table.TableStatus;
+      console.log("DoctorsTable status:", tableStatus);
+    }
+    
+    console.log("DoctorsTable is now active and ready to use!");
+    
+  } catch (error) {
+    console.error("Error creating DoctorsTable:", error);
     process.exit(1);
   }
 }
@@ -101,6 +197,7 @@ async function listTables() {
 async function main() {
   console.log("Setting up local DynamoDB tables...");
   await createPatientsTable();
+  await createDoctorsTable();
   await listTables();
   console.log("Setup complete!");
 }

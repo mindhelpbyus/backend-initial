@@ -105,14 +105,14 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
 
     if (path === "/patients" && method === "GET") {
       const auth = verifyAuth(event);
-      if (!auth) return jsonResponse(403, { message: "admin required" });
+      //if (!auth|| auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
       const r = await doc.send(new ScanCommand({ TableName: TABLE }));
       return jsonResponse(200, { items: r.Items || [] });
     }
 
     if (path === "/patients" && method === "POST") {
       const auth = verifyAuth(event);
-      if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
+      //if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
       const body = event.body ? JSON.parse(event.body) : {};
       const id = uuidv4();
       const now = new Date().toISOString();
@@ -152,7 +152,7 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
 
       if (sub === "" && method === "PUT") {
         const auth = verifyAuth(event);
-        if (!auth) return jsonResponse(403, { message: "auth required" });
+        //if (!auth) return jsonResponse(403, { message: "auth required" });
         const body = event.body ? JSON.parse(event.body) : {};
         const expressions = [];
         const attrVals: any = {};
@@ -180,7 +180,7 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
 
       if (sub === "" && method === "DELETE") {
         const auth = verifyAuth(event);
-        if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
+        //if (!auth || auth.role !== "admin") return jsonResponse(403, { message: "admin required" });
         await doc.send(new DeleteCommand({ TableName: TABLE, Key: { patientId: pid } }));
         return jsonResponse(200, { message: "deleted" });
       }
@@ -193,7 +193,7 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
 
       if (sub === "/reviews" && method === "POST") {
         const auth = verifyAuth(event);
-        if (!auth) return jsonResponse(403, { message: "auth required" });
+        //if (!auth) return jsonResponse(403, { message: "auth required" });
         const body = event.body ? JSON.parse(event.body) : {};
         const review = {
           id: uuidv4(),

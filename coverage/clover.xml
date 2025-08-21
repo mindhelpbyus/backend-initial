@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1755659699112" clover="3.2.0">
+  <project timestamp="1755659699112" name="All files">
+    <metrics statements="570" coveredstatements="462" conditionals="580" coveredconditionals="360" methods="40" coveredmethods="40" elements="1190" coveredelements="862" complexity="0" loc="570" ncloc="570" packages="8" files="12" classes="12"/>
+    <package name="cdk.cdk.out.asset.8f4e9295b66feb5f7046aac8ce82b7166d6ef93ba0d7aafe2acb6ddff359ac50.src">
+      <metrics statements="119" coveredstatements="93" conditionals="138" coveredconditionals="84" methods="4" coveredmethods="4"/>
+      <file name="config.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.8f4e9295b66feb5f7046aac8ce82b7166d6ef93ba0d7aafe2acb6ddff359ac50/src/config.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+      <file name="handler.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.8f4e9295b66feb5f7046aac8ce82b7166d6ef93ba0d7aafe2acb6ddff359ac50/src/handler.ts">
+        <metrics statements="114" coveredstatements="88" conditionals="132" coveredconditionals="81" methods="3" coveredmethods="3"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="34" count="8" type="cond" truecount="8" falsecount="2"/>
+        <line num="35" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="37" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="33" type="cond" truecount="1" falsecount="6"/>
+        <line num="47" count="33" type="cond" truecount="4" falsecount="19"/>
+        <line num="48" count="33" type="stmt"/>
+        <line num="49" count="33" type="cond" truecount="3" falsecount="0"/>
+        <line num="50" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="52" count="10" type="cond" truecount="3" falsecount="0"/>
+        <line num="54" count="8" type="stmt"/>
+        <line num="61" count="8" type="cond" truecount="2" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="66" count="7" type="stmt"/>
+        <line num="67" count="7" type="stmt"/>
+        <line num="68" count="7" type="stmt"/>
+        <line num="79" count="7" type="stmt"/>
+        <line num="80" count="7" type="stmt"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="84" count="23" type="cond" truecount="3" falsecount="0"/>
+        <line num="85" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="87" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="96" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="106" count="18" type="cond" truecount="3" falsecount="0"/>
+        <line num="107" count="3" type="stmt"/>
+        <line num="108" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="110" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="113" count="15" type="cond" truecount="3" falsecount="0"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="115" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="116" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="128" count="12" type="cond" truecount="3" falsecount="0"/>
+        <line num="129" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="131" count="2" type="stmt"/>
+        <line num="137" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="9" type="stmt"/>
+        <line num="141" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="143" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="145" count="9" type="cond" truecount="3" falsecount="0"/>
+        <line num="146" count="4" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="148" count="3" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="3" type="stmt"/>
+        <line num="153" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="155" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="156" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="166" count="0" type="stmt"/>
+        <line num="167" count="0" type="stmt"/>
+        <line num="169" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="171" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="181" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="182" count="0" type="stmt"/>
+        <line num="183" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="184" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="188" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="189" count="3" type="stmt"/>
+        <line num="190" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="191" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="194" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="195" count="2" type="stmt"/>
+        <line num="196" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="197" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="198" count="1" type="stmt"/>
+        <line num="203" count="1" type="stmt"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="216" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="cdk.cdk.out.asset.8f4e9295b66feb5f7046aac8ce82b7166d6ef93ba0d7aafe2acb6ddff359ac50.tests">
+      <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <file name="test-helpers.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.8f4e9295b66feb5f7046aac8ce82b7166d6ef93ba0d7aafe2acb6ddff359ac50/tests/test-helpers.ts">
+        <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="28" count="33" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="16" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="77" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="15" type="stmt"/>
+        <line num="87" count="15" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="cdk.cdk.out.asset.cda8ddbd93c4893bed6d89f20dca44c82caedb1ddeef8925da54023a97cfbece.src">
+      <metrics statements="118" coveredstatements="92" conditionals="135" coveredconditionals="81" methods="4" coveredmethods="4"/>
+      <file name="config.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.cda8ddbd93c4893bed6d89f20dca44c82caedb1ddeef8925da54023a97cfbece/src/config.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+      <file name="handler.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.cda8ddbd93c4893bed6d89f20dca44c82caedb1ddeef8925da54023a97cfbece/src/handler.ts">
+        <metrics statements="113" coveredstatements="87" conditionals="129" coveredconditionals="78" methods="3" coveredmethods="3"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="34" count="8" type="cond" truecount="8" falsecount="2"/>
+        <line num="35" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="37" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="33" type="cond" truecount="1" falsecount="6"/>
+        <line num="47" count="33" type="cond" truecount="4" falsecount="19"/>
+        <line num="48" count="33" type="stmt"/>
+        <line num="49" count="33" type="cond" truecount="3" falsecount="0"/>
+        <line num="50" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="52" count="10" type="cond" truecount="3" falsecount="0"/>
+        <line num="54" count="8" type="stmt"/>
+        <line num="61" count="8" type="cond" truecount="2" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="66" count="7" type="stmt"/>
+        <line num="67" count="7" type="stmt"/>
+        <line num="68" count="7" type="stmt"/>
+        <line num="79" count="7" type="stmt"/>
+        <line num="80" count="7" type="stmt"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="84" count="23" type="cond" truecount="3" falsecount="0"/>
+        <line num="85" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="87" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="96" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="106" count="18" type="cond" truecount="3" falsecount="0"/>
+        <line num="107" count="3" type="stmt"/>
+        <line num="109" count="3" type="stmt"/>
+        <line num="110" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="113" count="15" type="cond" truecount="3" falsecount="0"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="115" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="116" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="128" count="12" type="cond" truecount="3" falsecount="0"/>
+        <line num="129" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="131" count="2" type="stmt"/>
+        <line num="137" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="9" type="stmt"/>
+        <line num="141" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="143" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="145" count="9" type="cond" truecount="3" falsecount="0"/>
+        <line num="146" count="4" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="148" count="3" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="3" type="stmt"/>
+        <line num="153" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="155" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="156" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="166" count="0" type="stmt"/>
+        <line num="167" count="0" type="stmt"/>
+        <line num="169" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="171" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="181" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="182" count="0" type="stmt"/>
+        <line num="183" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="184" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="188" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="189" count="3" type="stmt"/>
+        <line num="190" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="191" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="194" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="195" count="2" type="stmt"/>
+        <line num="196" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="197" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="198" count="1" type="stmt"/>
+        <line num="203" count="1" type="stmt"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="216" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="cdk.cdk.out.asset.cda8ddbd93c4893bed6d89f20dca44c82caedb1ddeef8925da54023a97cfbece.tests">
+      <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <file name="test-helpers.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.cda8ddbd93c4893bed6d89f20dca44c82caedb1ddeef8925da54023a97cfbece/tests/test-helpers.ts">
+        <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="28" count="33" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="16" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="77" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="15" type="stmt"/>
+        <line num="87" count="15" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="cdk.cdk.out.asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3.src">
+      <metrics statements="119" coveredstatements="93" conditionals="136" coveredconditionals="82" methods="4" coveredmethods="4"/>
+      <file name="config.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3/src/config.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+      <file name="handler.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3/src/handler.ts">
+        <metrics statements="114" coveredstatements="88" conditionals="130" coveredconditionals="79" methods="3" coveredmethods="3"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="34" count="8" type="cond" truecount="8" falsecount="2"/>
+        <line num="35" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="37" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="33" type="cond" truecount="1" falsecount="6"/>
+        <line num="47" count="33" type="cond" truecount="4" falsecount="19"/>
+        <line num="48" count="33" type="stmt"/>
+        <line num="49" count="33" type="cond" truecount="3" falsecount="0"/>
+        <line num="50" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="52" count="10" type="cond" truecount="3" falsecount="0"/>
+        <line num="54" count="8" type="stmt"/>
+        <line num="61" count="8" type="cond" truecount="2" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="66" count="7" type="stmt"/>
+        <line num="67" count="7" type="stmt"/>
+        <line num="68" count="7" type="stmt"/>
+        <line num="79" count="7" type="stmt"/>
+        <line num="80" count="7" type="stmt"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="84" count="23" type="cond" truecount="3" falsecount="0"/>
+        <line num="85" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="87" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="96" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="106" count="18" type="cond" truecount="3" falsecount="0"/>
+        <line num="107" count="3" type="stmt"/>
+        <line num="108" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="109" count="2" type="stmt"/>
+        <line num="110" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="113" count="15" type="cond" truecount="3" falsecount="0"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="115" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="116" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="128" count="12" type="cond" truecount="3" falsecount="0"/>
+        <line num="129" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="131" count="2" type="stmt"/>
+        <line num="137" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="9" type="stmt"/>
+        <line num="141" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="143" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="145" count="9" type="cond" truecount="3" falsecount="0"/>
+        <line num="146" count="4" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="148" count="3" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="3" type="stmt"/>
+        <line num="153" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="155" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="156" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="166" count="0" type="stmt"/>
+        <line num="167" count="0" type="stmt"/>
+        <line num="169" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="171" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="181" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="182" count="0" type="stmt"/>
+        <line num="183" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="184" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="188" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="189" count="3" type="stmt"/>
+        <line num="190" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="191" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="194" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="195" count="2" type="stmt"/>
+        <line num="196" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="197" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="198" count="1" type="stmt"/>
+        <line num="203" count="1" type="stmt"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="216" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="cdk.cdk.out.asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3.tests">
+      <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <file name="test-helpers.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/cdk/cdk.out/asset.fcd2bd36ee4b20567c3594e7cf3396d266dec1addfc8a378be90b462aa54c8f3/tests/test-helpers.ts">
+        <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="28" count="33" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="16" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="77" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="15" type="stmt"/>
+        <line num="87" count="15" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.lambdas.patients.src">
+      <metrics statements="118" coveredstatements="92" conditionals="135" coveredconditionals="81" methods="4" coveredmethods="4"/>
+      <file name="config.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/src/lambdas/patients/src/config.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+      </file>
+      <file name="handler.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/src/lambdas/patients/src/handler.ts">
+        <metrics statements="113" coveredstatements="87" conditionals="129" coveredconditionals="78" methods="3" coveredmethods="3"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="34" count="8" type="cond" truecount="8" falsecount="2"/>
+        <line num="35" count="8" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="5" type="stmt"/>
+        <line num="37" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="33" type="cond" truecount="1" falsecount="6"/>
+        <line num="47" count="33" type="cond" truecount="4" falsecount="19"/>
+        <line num="48" count="33" type="stmt"/>
+        <line num="49" count="33" type="cond" truecount="3" falsecount="0"/>
+        <line num="50" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="52" count="10" type="cond" truecount="3" falsecount="0"/>
+        <line num="54" count="8" type="stmt"/>
+        <line num="61" count="8" type="cond" truecount="2" falsecount="1"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+        <line num="66" count="7" type="stmt"/>
+        <line num="67" count="7" type="stmt"/>
+        <line num="68" count="7" type="stmt"/>
+        <line num="79" count="7" type="stmt"/>
+        <line num="80" count="7" type="stmt"/>
+        <line num="81" count="7" type="stmt"/>
+        <line num="84" count="23" type="cond" truecount="3" falsecount="0"/>
+        <line num="85" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="87" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="96" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="106" count="18" type="cond" truecount="3" falsecount="0"/>
+        <line num="107" count="3" type="stmt"/>
+        <line num="109" count="3" type="stmt"/>
+        <line num="110" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="113" count="15" type="cond" truecount="3" falsecount="0"/>
+        <line num="114" count="3" type="stmt"/>
+        <line num="115" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="116" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="128" count="12" type="cond" truecount="3" falsecount="0"/>
+        <line num="129" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="131" count="2" type="stmt"/>
+        <line num="137" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="9" type="stmt"/>
+        <line num="141" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="143" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="145" count="9" type="cond" truecount="3" falsecount="0"/>
+        <line num="146" count="4" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="148" count="3" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="3" type="stmt"/>
+        <line num="153" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="155" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="156" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="166" count="0" type="stmt"/>
+        <line num="167" count="0" type="stmt"/>
+        <line num="169" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="171" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="181" count="5" type="cond" truecount="1" falsecount="2"/>
+        <line num="182" count="0" type="stmt"/>
+        <line num="183" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="184" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="188" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="189" count="3" type="stmt"/>
+        <line num="190" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="191" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="194" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="195" count="2" type="stmt"/>
+        <line num="196" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="197" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="198" count="1" type="stmt"/>
+        <line num="203" count="1" type="stmt"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="216" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.lambdas.patients.tests">
+      <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <file name="test-helpers.ts" path="/Users/prabuv/MentalHealthProject/backend-initial/src/lambdas/patients/tests/test-helpers.ts">
+        <metrics statements="24" coveredstatements="23" conditionals="9" coveredconditionals="8" methods="6" coveredmethods="6"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="28" count="33" type="stmt"/>
+        <line num="59" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="16" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="77" count="3" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="15" type="stmt"/>
+        <line num="87" count="15" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

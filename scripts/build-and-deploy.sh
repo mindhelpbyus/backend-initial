@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Build and Deploy Script for Patient API
-# This script builds Lambda functions, updates CDK stack, and redeploys to LocalStack
+# Build and Deploy Script for Healthcare API
+# This script builds Lambda functions (patients & doctors), updates CDK stack, and redeploys to LocalStack
 
 set -e  # Exit on any error
 
@@ -120,6 +120,29 @@ build_lambdas() {
         print_success "Patients Lambda built successfully"
     else
         print_warning "Patients Lambda directory not found, skipping..."
+    fi
+    
+    # Build doctors Lambda
+    if [ -d "src/lambdas/doctors" ]; then
+        print_status "Building doctors Lambda..."
+        cd src/lambdas/doctors
+        
+        # Install dependencies
+        if [ -f "package.json" ]; then
+            print_status "Installing dependencies..."
+            npm install
+        fi
+        
+        # Build TypeScript
+        if [ -f "tsconfig.json" ]; then
+            print_status "Compiling TypeScript..."
+            npx tsc
+        fi
+        
+        cd ../../..
+        print_success "Doctors Lambda built successfully"
+    else
+        print_warning "Doctors Lambda directory not found, skipping..."
     fi
 }
 
@@ -312,7 +335,7 @@ show_summary() {
 # Main execution
 main() {
     echo "=================================="
-    echo "  Patient API Build & Deploy"
+    echo "  Healthcare API Build & Deploy"
     echo "=================================="
     echo
     
@@ -338,7 +361,7 @@ case "${1:-}" in
     --help|-h)
         echo "Usage: $0 [OPTIONS]"
         echo
-        echo "Build and deploy Patient API to LocalStack"
+        echo "Build and deploy Healthcare API (Patients & Doctors) to LocalStack"
         echo
         echo "Options:"
         echo "  --help, -h     Show this help message"
