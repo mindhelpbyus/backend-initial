@@ -1,0 +1,8 @@
+{
+  "name": "patients-lambda",
+  "version": "1.0.0",
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsc"
+  }
+}

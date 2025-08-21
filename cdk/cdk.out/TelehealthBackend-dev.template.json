@@ -305,7 +305,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
-     "S3Key": "a54e88de65eeac446fadfeccf5005cb2a3b226bd11ce8fc8972e026f39047a90.zip"
+     "S3Key": "56c6adf6c66d688fb3d8908972d4c30941f9acf4c88b09468d8f7ff61b1df2db.zip"
     },
     "Environment": {
      "Variables": {
@@ -346,7 +346,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/PatientsLambda/Resource",
-    "aws:asset:path": "asset.a54e88de65eeac446fadfeccf5005cb2a3b226bd11ce8fc8972e026f39047a90",
+    "aws:asset:path": "asset.56c6adf6c66d688fb3d8908972d4c30941f9acf4c88b09468d8f7ff61b1df2db",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -356,7 +356,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
-     "S3Key": "dc8a7a8d2bbe2b79202c28a675e58cd02c2d1f9f123aeff805bc85cf7f66ea20.zip"
+     "S3Key": "05dc655bc4d622ba2500fe79814af442325ea29631dd2b17fb4e2cc521e9556a.zip"
     },
     "Environment": {
      "Variables": {
@@ -397,7 +397,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/DoctorsLambda/Resource",
-    "aws:asset:path": "asset.dc8a7a8d2bbe2b79202c28a675e58cd02c2d1f9f123aeff805bc85cf7f66ea20",
+    "aws:asset:path": "asset.05dc655bc4d622ba2500fe79814af442325ea29631dd2b17fb4e2cc521e9556a",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -1443,7 +1443,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12OwW6EMAxEv2XvwS3wBbuVqvZUxPa+MiGlLiRB2FmEovz7KqBKVU/zxh6NXUFVlvB8wpUL3Y/FRB3Eq6AeFa58i/3m0Pq+g/iJ3WTUy5fbISlCC7H1x2zXxk+kt2wPSmpC2/UI8TU4LeRd3v3lxiyWmMm7pLi+IbMRhnMWxTVcgh6NXJCNwpkGFLPidq8gvonM55lyRZZsr4LD/soBedT6IAe9OzHDgr9n/9k9l5JqDfuwaKP2B3IPuSEHPoLMQZJqNvn27qmGsoKyPP0wUbEEJ2QNtIc+APB2agJQAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12OwW6EMAxEv2XvwS1w6Hm3UtWeitjeVyak1AskCDtFKMq/VyGqVPU0b+zR2BVUZQmPJ9y40P1YTNRBuArqUeHGt9DvFmfXdxA+sJuMev60B0RFOENoXZ4d2riJ9J5spqgmnLseIbx4q4WcTbu/3Jh1JmZyNiqub8hshOGcRHENF69HIxdko3ChAcVsuH9XEF5FlvNCqSJJslfB4XglQxq1zkumNytmWPH37D975GJUrWHnV23U8UDqITukwLuXxUtUzS5fzj7UUNbwdLozUbF6KzQbaLP+AKo+enJPAQAA"
    },
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/CDKMetadata/Default"

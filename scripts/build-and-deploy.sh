@@ -99,21 +99,19 @@ check_localstack() {
 build_lambdas() {
     print_status "Building Lambda functions..."
     
+    # Install root dependencies for webpack and TypeScript compilation
+    print_status "Installing root dependencies..."
+    npm install
+    
     # Build patients Lambda
     if [ -d "src/lambdas/patients" ]; then
         print_status "Building patients Lambda..."
         cd src/lambdas/patients
         
-        # Install dependencies
-        if [ -f "package.json" ]; then
-            print_status "Installing dependencies..."
-            npm install
-        fi
-        
-        # Build TypeScript
-        if [ -f "tsconfig.json" ]; then
-            print_status "Compiling TypeScript..."
-            npx tsc
+        # Build using webpack with root dependencies
+        if [ -f "webpack.config.js" ]; then
+            print_status "Bundling with webpack..."
+            PATH="../../../node_modules/.bin:$PATH" npx webpack --config webpack.config.js
         fi
         
         cd ../../..
@@ -127,16 +125,10 @@ build_lambdas() {
         print_status "Building doctors Lambda..."
         cd src/lambdas/doctors
         
-        # Install dependencies
-        if [ -f "package.json" ]; then
-            print_status "Installing dependencies..."
-            npm install
-        fi
-        
-        # Build TypeScript
-        if [ -f "tsconfig.json" ]; then
-            print_status "Compiling TypeScript..."
-            npx tsc
+        # Build using webpack with root dependencies
+        if [ -f "webpack.config.js" ]; then
+            print_status "Bundling with webpack..."
+            PATH="../../../node_modules/.bin:$PATH" npx webpack --config webpack.config.js
         fi
         
         cd ../../..
