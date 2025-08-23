@@ -46,16 +46,16 @@
         }
       }
     },
-    "af923678320d510bc39cb34b5c413e8362fa17226d1550f85cc8c2dd7ec93ca9": {
-      "displayName": "TelehealthBackend-dev Template",
+    "b06357e3d1ea97c802b8b6a6d35ffe929ed94e48e2dc174835570c4153eed8c5": {
+      "displayName": "TelehealthBackend-prod Template",
       "source": {
-        "path": "TelehealthBackend-dev.template.json",
+        "path": "TelehealthBackend-prod.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "121775527089-us-east-1-ba61ea7d": {
+        "121775527089-us-east-1-57b9370d": {
           "bucketName": "cdk-hnb659fds-assets-121775527089-us-east-1",
-          "objectKey": "af923678320d510bc39cb34b5c413e8362fa17226d1550f85cc8c2dd7ec93ca9.json",
+          "objectKey": "b06357e3d1ea97c802b8b6a6d35ffe929ed94e48e2dc174835570c4153eed8c5.json",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-file-publishing-role-121775527089-us-east-1"
         }

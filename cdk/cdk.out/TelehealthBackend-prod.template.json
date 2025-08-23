@@ -1,5 +1,5 @@
 {
- "Description": "Telehealth Backend Infrastructure - DEV environment",
+ "Description": "Telehealth Backend Infrastructure - PROD environment",
  "Resources": {
   "PatientsTable087EEB9B": {
    "Type": "AWS::DynamoDB::Table",
@@ -50,7 +50,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -65,7 +65,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/PatientsTable/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/PatientsTable/Resource"
    }
   },
   "DoctorsTable4E450B5B": {
@@ -137,7 +137,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -152,7 +152,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/DoctorsTable/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/DoctorsTable/Resource"
    }
   },
   "AppointmentsTable8553CB1E": {
@@ -248,7 +248,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -263,7 +263,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/AppointmentsTable/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/AppointmentsTable/Resource"
    }
   },
   "LambdaExecutionRoleD5C26073": {
@@ -298,7 +298,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -311,7 +311,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/LambdaExecutionRole/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/LambdaExecutionRole/Resource"
    }
   },
   "LambdaExecutionRoleDefaultPolicy6D69732F": {
@@ -447,7 +447,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/LambdaExecutionRole/DefaultPolicy/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/LambdaExecutionRole/DefaultPolicy/Resource"
    }
   },
   "PatientsLambda2BB68394": {
@@ -477,7 +477,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -495,7 +495,7 @@
     "LambdaExecutionRoleD5C26073"
    ],
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/PatientsLambda/Resource",
+    "aws:cdk:path": "TelehealthBackend-prod/PatientsLambda/Resource",
     "aws:asset:path": "asset.c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
@@ -528,7 +528,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -546,7 +546,7 @@
     "LambdaExecutionRoleD5C26073"
    ],
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/DoctorsLambda/Resource",
+    "aws:cdk:path": "TelehealthBackend-prod/DoctorsLambda/Resource",
     "aws:asset:path": "asset.8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
@@ -579,7 +579,7 @@
     "Tags": [
      {
       "Key": "Environment",
-      "Value": "dev"
+      "Value": "prod"
      },
      {
       "Key": "ManagedBy",
@@ -597,7 +597,7 @@
     "LambdaExecutionRoleD5C26073"
    ],
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/AppointmentsLambda/Resource",
+    "aws:cdk:path": "TelehealthBackend-prod/AppointmentsLambda/Resource",
     "aws:asset:path": "asset.1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
@@ -624,13 +624,13 @@
     "Name": "TelehealthAPI",
     "ProtocolType": "HTTP",
     "Tags": {
-     "Environment": "dev",
+     "Environment": "prod",
      "ManagedBy": "CDK",
      "Project": "TelehealthBackend"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/Resource"
    }
   },
   "TelehealthAPIDefaultStageF7A53370": {
@@ -642,13 +642,13 @@
     "AutoDeploy": true,
     "StageName": "$default",
     "Tags": {
-     "Environment": "dev",
+     "Environment": "prod",
      "ManagedBy": "CDK",
      "Project": "TelehealthBackend"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DefaultStage/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DefaultStage/Resource"
    }
   },
   "TelehealthAPIPOSTauthsignupPatientsIntegration3C6C1C21": {
@@ -667,7 +667,7 @@
     "PayloadFormatVersion": "2.0"
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/PatientsIntegration/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/PatientsIntegration/Resource"
    }
   },
   "TelehealthAPIPOSTauthsignupPatientsIntegrationPermission067794A0": {
@@ -699,7 +699,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTauthsignup374780C4": {
@@ -723,7 +723,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/Resource"
    }
   },
   "TelehealthAPIPOSTauthloginPatientsIntegrationPermission77AB1B4C": {
@@ -755,7 +755,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--auth--login/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--auth--login/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTauthloginF245CE10": {
@@ -779,7 +779,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--auth--login/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--auth--login/Resource"
    }
   },
   "TelehealthAPIGETpatientsPatientsIntegrationPermission48D48FC4": {
@@ -811,7 +811,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIGETpatients2E8B16B2": {
@@ -835,7 +835,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients/Resource"
    }
   },
   "TelehealthAPIPOSTpatientsPatientsIntegrationPermissionD5E5A9A7": {
@@ -867,7 +867,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--patients/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--patients/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTpatientsE92B70DC": {
@@ -891,7 +891,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--patients/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--patients/Resource"
    }
   },
   "TelehealthAPIGETpatientspatientIdPatientsIntegrationPermissionB1553F19": {
@@ -923,7 +923,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIGETpatientspatientIdFDA14F6E": {
@@ -947,7 +947,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}/Resource"
    }
   },
   "TelehealthAPIPUTpatientspatientIdPatientsIntegrationPermission1CB54A90": {
@@ -979,7 +979,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--patients--{patientId}/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--patients--{patientId}/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIPUTpatientspatientId0E7F7D5A": {
@@ -1003,7 +1003,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--patients--{patientId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--patients--{patientId}/Resource"
    }
   },
   "TelehealthAPIDELETEpatientspatientIdPatientsIntegrationPermissionA6D5840C": {
@@ -1035,7 +1035,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--patients--{patientId}/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--patients--{patientId}/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIDELETEpatientspatientId31F4BF5E": {
@@ -1059,7 +1059,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--patients--{patientId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--patients--{patientId}/Resource"
    }
   },
   "TelehealthAPIGETpatientsbyemailPatientsIntegrationPermission1BC90B10": {
@@ -1091,7 +1091,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--by-email/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--by-email/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIGETpatientsbyemail999EE7CA": {
@@ -1115,7 +1115,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--by-email/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--by-email/Resource"
    }
   },
   "TelehealthAPIGETpatientspatientIdvisitsPatientsIntegrationPermissionBFEFB8BA": {
@@ -1147,7 +1147,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}--visits/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}--visits/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIGETpatientspatientIdvisits8358F720": {
@@ -1171,7 +1171,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}--visits/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}--visits/Resource"
    }
   },
   "TelehealthAPIPOSTpatientspatientIdreviewsPatientsIntegrationPermission127BE2B0": {
@@ -1203,7 +1203,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--patients--{patientId}--reviews/PatientsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--patients--{patientId}--reviews/PatientsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTpatientspatientIdreviewsDD4DE915": {
@@ -1227,7 +1227,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--patients--{patientId}--reviews/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--patients--{patientId}--reviews/Resource"
    }
   },
   "TelehealthAPIGETdoctorsDoctorsIntegration7B9D9E0C": {
@@ -1246,7 +1246,7 @@
     "PayloadFormatVersion": "2.0"
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors/DoctorsIntegration/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors/DoctorsIntegration/Resource"
    }
   },
   "TelehealthAPIGETdoctorsDoctorsIntegrationPermission53956C05": {
@@ -1278,7 +1278,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIGETdoctors396224BB": {
@@ -1302,7 +1302,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors/Resource"
    }
   },
   "TelehealthAPIPOSTdoctorsDoctorsIntegrationPermission5C3079F8": {
@@ -1334,7 +1334,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--doctors/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--doctors/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTdoctors34D75BF4": {
@@ -1358,7 +1358,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--doctors/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--doctors/Resource"
    }
   },
   "TelehealthAPIGETdoctorsdoctorIdDoctorsIntegrationPermission1BB34D03": {
@@ -1390,7 +1390,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--{doctorId}/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--{doctorId}/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIGETdoctorsdoctorIdF6F62AFE": {
@@ -1414,7 +1414,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--{doctorId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--{doctorId}/Resource"
    }
   },
   "TelehealthAPIPUTdoctorsdoctorIdDoctorsIntegrationPermissionBFFD3A94": {
@@ -1446,7 +1446,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--doctors--{doctorId}/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--doctors--{doctorId}/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIPUTdoctorsdoctorId6E775068": {
@@ -1470,7 +1470,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--doctors--{doctorId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--doctors--{doctorId}/Resource"
    }
   },
   "TelehealthAPIDELETEdoctorsdoctorIdDoctorsIntegrationPermission9EF5FF93": {
@@ -1502,7 +1502,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--doctors--{doctorId}/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--doctors--{doctorId}/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIDELETEdoctorsdoctorIdC9578E82": {
@@ -1526,7 +1526,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--doctors--{doctorId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--doctors--{doctorId}/Resource"
    }
   },
   "TelehealthAPIGETdoctorsbyemailDoctorsIntegrationPermission9F6B4470": {
@@ -1558,7 +1558,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-email/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-email/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIGETdoctorsbyemail5A305ED6": {
@@ -1582,7 +1582,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-email/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-email/Resource"
    }
   },
   "TelehealthAPIGETdoctorsbyspecializationDoctorsIntegrationPermissionC2CE6FD7": {
@@ -1614,7 +1614,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-specialization/DoctorsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-specialization/DoctorsIntegration-Permission"
    }
   },
   "TelehealthAPIGETdoctorsbyspecialization9223599F": {
@@ -1638,7 +1638,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-specialization/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-specialization/Resource"
    }
   },
   "TelehealthAPIGETappointmentsAppointmentsIntegration0FAD6E1F": {
@@ -1657,7 +1657,7 @@
     "PayloadFormatVersion": "2.0"
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments/AppointmentsIntegration/Resource"
    }
   },
   "TelehealthAPIGETappointmentsAppointmentsIntegrationPermission17666BBA": {
@@ -1689,7 +1689,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIGETappointments77C8C072": {
@@ -1713,7 +1713,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments/Resource"
    }
   },
   "TelehealthAPIPOSTappointmentsAppointmentsIntegrationPermission4BDD8A61": {
@@ -1745,7 +1745,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--appointments/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--appointments/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIPOSTappointmentsC9E0B246": {
@@ -1769,7 +1769,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--appointments/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/POST--appointments/Resource"
    }
   },
   "TelehealthAPIGETappointmentsappointmentIdAppointmentsIntegrationPermissionE608AB1D": {
@@ -1801,7 +1801,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--{appointmentId}/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIGETappointmentsappointmentId3B598DFF": {
@@ -1825,7 +1825,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--{appointmentId}/Resource"
    }
   },
   "TelehealthAPIPUTappointmentsappointmentIdAppointmentsIntegrationPermissionADD2CEBB": {
@@ -1857,7 +1857,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--appointments--{appointmentId}/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIPUTappointmentsappointmentId239ACFDB": {
@@ -1881,7 +1881,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/PUT--appointments--{appointmentId}/Resource"
    }
   },
   "TelehealthAPIDELETEappointmentsappointmentIdAppointmentsIntegrationPermission1AA1FE9E": {
@@ -1913,7 +1913,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--appointments--{appointmentId}/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIDELETEappointmentsappointmentId60604D38": {
@@ -1937,7 +1937,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/DELETE--appointments--{appointmentId}/Resource"
    }
   },
   "TelehealthAPIGETappointmentspatientAppointmentsIntegrationPermissionE33DE050": {
@@ -1969,7 +1969,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--patient/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIGETappointmentspatientA0336234": {
@@ -1993,7 +1993,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--patient/Resource"
    }
   },
   "TelehealthAPIGETappointmentsdoctorAppointmentsIntegrationPermission7393F74E": {
@@ -2025,7 +2025,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/AppointmentsIntegration-Permission"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--doctor/AppointmentsIntegration-Permission"
    }
   },
   "TelehealthAPIGETappointmentsdoctor7159B295": {
@@ -2049,7 +2049,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/Resource"
+    "aws:cdk:path": "TelehealthBackend-prod/TelehealthAPI/GET--appointments--doctor/Resource"
    }
   },
   "CDKMetadata": {
@@ -2058,7 +2058,7 @@
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/12OwW6EMAxEv2XvwS3wBbuVqvZUxPa+MiGlLiRB2FmEovz7KqBKVU/zxh6NXUFVlvB8wpUL3Y/FRB3Eq6AeFa58i/3m0Pq+g/iJ3WTUy5fbISlCC7H1x2zXxk+kt2wPSmpC2/UI8TU4LeRd3v3lxiyWmMm7pLi+IbMRhnMWxTVcgh6NXJCNwpkGFLPidq8gvonM55lyRZZsr4LD/soBedT6IAe9OzHDgr9n/9k9l5JqDfuwaKP2B3IPuSEHPoLMQZJqNvn27qmGsoKyPP0wUbEEJ2QNtIc+APB2agJQAQAA"
    },
    "Metadata": {
-    "aws:cdk:path": "TelehealthBackend-dev/CDKMetadata/Default"
+    "aws:cdk:path": "TelehealthBackend-prod/CDKMetadata/Default"
    }
   }
  },
