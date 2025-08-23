@@ -1,52 +1,52 @@
 {
   "version": "48.0.0",
   "artifacts": {
-    "TelehealthBackend-prod.assets": {
+    "TelehealthBackend-dev.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
-        "file": "TelehealthBackend-prod.assets.json",
+        "file": "TelehealthBackend-dev.assets.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
       }
     },
-    "TelehealthBackend-prod": {
+    "TelehealthBackend-dev": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://121775527089/us-east-1",
+      "environment": "aws://000000000000/us-east-1",
       "properties": {
-        "templateFile": "TelehealthBackend-prod.template.json",
+        "templateFile": "TelehealthBackend-dev.template.json",
         "terminationProtection": false,
         "tags": {
-          "Environment": "prod",
+          "Environment": "dev",
           "ManagedBy": "CDK",
           "Owner": "TelehealthTeam",
           "Project": "TelehealthBackend"
         },
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-deploy-role-121775527089-us-east-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-cfn-exec-role-121775527089-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-121775527089-us-east-1/b06357e3d1ea97c802b8b6a6d35ffe929ed94e48e2dc174835570c4153eed8c5.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-deploy-role-000000000000-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-cfn-exec-role-000000000000-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
-          "TelehealthBackend-prod.assets"
+          "TelehealthBackend-dev.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-lookup-role-121775527089-us-east-1",
+          "arn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-lookup-role-000000000000-us-east-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
       },
       "dependencies": [
-        "TelehealthBackend-prod.assets"
+        "TelehealthBackend-dev.assets"
       ],
       "metadata": {
-        "/TelehealthBackend-prod": [
+        "/TelehealthBackend-dev": [
           {
             "type": "aws:cdk:stack-tags",
             "data": [
               {
                 "Key": "Environment",
-                "Value": "prod"
+                "Value": "dev"
               },
               {
                 "Key": "ManagedBy",
@@ -63,7 +63,7 @@
             ]
           }
         ],
-        "/TelehealthBackend-prod/PatientsTable": [
+        "/TelehealthBackend-dev/PatientsTable": [
           {
             "type": "aws:cdk:hasPhysicalName",
             "data": {
@@ -71,13 +71,13 @@
             }
           }
         ],
-        "/TelehealthBackend-prod/PatientsTable/Resource": [
+        "/TelehealthBackend-dev/PatientsTable/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PatientsTable087EEB9B"
           }
         ],
-        "/TelehealthBackend-prod/DoctorsTable": [
+        "/TelehealthBackend-dev/DoctorsTable": [
           {
             "type": "aws:cdk:hasPhysicalName",
             "data": {
@@ -85,13 +85,13 @@
             }
           }
         ],
-        "/TelehealthBackend-prod/DoctorsTable/Resource": [
+        "/TelehealthBackend-dev/DoctorsTable/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsTable4E450B5B"
           }
         ],
-        "/TelehealthBackend-prod/AppointmentsTable": [
+        "/TelehealthBackend-dev/AppointmentsTable": [
           {
             "type": "aws:cdk:hasPhysicalName",
             "data": {
@@ -99,422 +99,422 @@
             }
           }
         ],
-        "/TelehealthBackend-prod/AppointmentsTable/Resource": [
+        "/TelehealthBackend-dev/AppointmentsTable/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsTable8553CB1E"
           }
         ],
-        "/TelehealthBackend-prod/LambdaExecutionRole/Resource": [
+        "/TelehealthBackend-dev/LambdaExecutionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "LambdaExecutionRoleD5C26073"
           }
         ],
-        "/TelehealthBackend-prod/LambdaExecutionRole/DefaultPolicy/Resource": [
+        "/TelehealthBackend-dev/LambdaExecutionRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "LambdaExecutionRoleDefaultPolicy6D69732F"
           }
         ],
-        "/TelehealthBackend-prod/PatientsLambda/Resource": [
+        "/TelehealthBackend-dev/PatientsLambda/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PatientsLambda2BB68394"
           }
         ],
-        "/TelehealthBackend-prod/DoctorsLambda/Resource": [
+        "/TelehealthBackend-dev/DoctorsLambda/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsLambda94A0C7B8"
           }
         ],
-        "/TelehealthBackend-prod/AppointmentsLambda/Resource": [
+        "/TelehealthBackend-dev/AppointmentsLambda/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsLambda8428FB86"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIAC6B8BC4"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DefaultStage/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/DefaultStage/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDefaultStageF7A53370"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/PatientsIntegration/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/PatientsIntegration/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTauthsignupPatientsIntegration3C6C1C21"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTauthsignupPatientsIntegrationPermission067794A0"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--auth--signup/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--auth--signup/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTauthsignup374780C4"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--auth--login/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--auth--login/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTauthloginPatientsIntegrationPermission77AB1B4C"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--auth--login/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--auth--login/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTauthloginF245CE10"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientsPatientsIntegrationPermission48D48FC4"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatients2E8B16B2"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--patients/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--patients/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTpatientsPatientsIntegrationPermissionD5E5A9A7"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--patients/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--patients/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTpatientsE92B70DC"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientspatientIdPatientsIntegrationPermissionB1553F19"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientspatientIdFDA14F6E"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--patients--{patientId}/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--patients--{patientId}/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTpatientspatientIdPatientsIntegrationPermission1CB54A90"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--patients--{patientId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--patients--{patientId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTpatientspatientId0E7F7D5A"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--patients--{patientId}/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--patients--{patientId}/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEpatientspatientIdPatientsIntegrationPermissionA6D5840C"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--patients--{patientId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--patients--{patientId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEpatientspatientId31F4BF5E"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--by-email/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--by-email/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientsbyemailPatientsIntegrationPermission1BC90B10"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--by-email/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--by-email/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientsbyemail999EE7CA"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}--visits/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}--visits/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientspatientIdvisitsPatientsIntegrationPermissionBFEFB8BA"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--patients--{patientId}--visits/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--patients--{patientId}--visits/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETpatientspatientIdvisits8358F720"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--patients--{patientId}--reviews/PatientsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--patients--{patientId}--reviews/PatientsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTpatientspatientIdreviewsPatientsIntegrationPermission127BE2B0"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--patients--{patientId}--reviews/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--patients--{patientId}--reviews/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTpatientspatientIdreviewsDD4DE915"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors/DoctorsIntegration/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors/DoctorsIntegration/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsDoctorsIntegration7B9D9E0C"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsDoctorsIntegrationPermission53956C05"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctors396224BB"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--doctors/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--doctors/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTdoctorsDoctorsIntegrationPermission5C3079F8"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--doctors/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--doctors/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTdoctors34D75BF4"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--{doctorId}/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--{doctorId}/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsdoctorIdDoctorsIntegrationPermission1BB34D03"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--{doctorId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--{doctorId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsdoctorIdF6F62AFE"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--doctors--{doctorId}/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--doctors--{doctorId}/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTdoctorsdoctorIdDoctorsIntegrationPermissionBFFD3A94"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--doctors--{doctorId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--doctors--{doctorId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTdoctorsdoctorId6E775068"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--doctors--{doctorId}/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--doctors--{doctorId}/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEdoctorsdoctorIdDoctorsIntegrationPermission9EF5FF93"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--doctors--{doctorId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--doctors--{doctorId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEdoctorsdoctorIdC9578E82"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-email/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-email/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsbyemailDoctorsIntegrationPermission9F6B4470"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-email/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-email/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsbyemail5A305ED6"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-specialization/DoctorsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-specialization/DoctorsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsbyspecializationDoctorsIntegrationPermissionC2CE6FD7"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--doctors--by-specialization/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--doctors--by-specialization/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETdoctorsbyspecialization9223599F"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments/AppointmentsIntegration/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsAppointmentsIntegration0FAD6E1F"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsAppointmentsIntegrationPermission17666BBA"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointments77C8C072"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--appointments/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--appointments/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTappointmentsAppointmentsIntegrationPermission4BDD8A61"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/POST--appointments/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/POST--appointments/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPOSTappointmentsC9E0B246"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsappointmentIdAppointmentsIntegrationPermissionE608AB1D"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--{appointmentId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--{appointmentId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsappointmentId3B598DFF"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTappointmentsappointmentIdAppointmentsIntegrationPermissionADD2CEBB"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/PUT--appointments--{appointmentId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/PUT--appointments--{appointmentId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIPUTappointmentsappointmentId239ACFDB"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEappointmentsappointmentIdAppointmentsIntegrationPermission1AA1FE9E"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/DELETE--appointments--{appointmentId}/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/DELETE--appointments--{appointmentId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIDELETEappointmentsappointmentId60604D38"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--patient/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentspatientAppointmentsIntegrationPermissionE33DE050"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--patient/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--patient/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentspatientA0336234"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--doctor/AppointmentsIntegration-Permission": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/AppointmentsIntegration-Permission": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsdoctorAppointmentsIntegrationPermission7393F74E"
           }
         ],
-        "/TelehealthBackend-prod/TelehealthAPI/GET--appointments--doctor/Resource": [
+        "/TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "TelehealthAPIGETappointmentsdoctor7159B295"
           }
         ],
-        "/TelehealthBackend-prod/ApiUrl": [
+        "/TelehealthBackend-dev/ApiUrl": [
           {
             "type": "aws:cdk:logicalId",
             "data": "ApiUrl"
           }
         ],
-        "/TelehealthBackend-prod/PatientsTableName": [
+        "/TelehealthBackend-dev/PatientsTableName": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PatientsTableName"
           }
         ],
-        "/TelehealthBackend-prod/PatientsLambdaArn": [
+        "/TelehealthBackend-dev/PatientsLambdaArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PatientsLambdaArn"
           }
         ],
-        "/TelehealthBackend-prod/DoctorsTableName": [
+        "/TelehealthBackend-dev/DoctorsTableName": [
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsTableName"
           }
         ],
-        "/TelehealthBackend-prod/DoctorsLambdaArn": [
+        "/TelehealthBackend-dev/DoctorsLambdaArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "DoctorsLambdaArn"
           }
         ],
-        "/TelehealthBackend-prod/AppointmentsTableName": [
+        "/TelehealthBackend-dev/AppointmentsTableName": [
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsTableName"
           }
         ],
-        "/TelehealthBackend-prod/AppointmentsLambdaArn": [
+        "/TelehealthBackend-dev/AppointmentsLambdaArn": [
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsLambdaArn"
           }
         ],
-        "/TelehealthBackend-prod/CDKMetadata/Default": [
+        "/TelehealthBackend-dev/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
           }
         ],
-        "/TelehealthBackend-prod/BootstrapVersion": [
+        "/TelehealthBackend-dev/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BootstrapVersion"
           }
         ],
-        "/TelehealthBackend-prod/CheckBootstrapVersion": [
+        "/TelehealthBackend-dev/CheckBootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CheckBootstrapVersion"
           }
         ]
       },
-      "displayName": "TelehealthBackend-prod"
+      "displayName": "TelehealthBackend-dev"
     },
     "Tree": {
       "type": "cdk:tree",

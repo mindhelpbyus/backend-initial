@@ -8,11 +8,11 @@
         "packaging": "zip"
       },
       "destinations": {
-        "121775527089-us-east-1-4bdb350e": {
-          "bucketName": "cdk-hnb659fds-assets-121775527089-us-east-1",
+        "000000000000-us-east-1-815d6850": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
           "objectKey": "c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f.zip",
           "region": "us-east-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-file-publishing-role-121775527089-us-east-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
@@ -23,11 +23,11 @@
         "packaging": "zip"
       },
       "destinations": {
-        "121775527089-us-east-1-43cf8c92": {
-          "bucketName": "cdk-hnb659fds-assets-121775527089-us-east-1",
+        "000000000000-us-east-1-33bdb205": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
           "objectKey": "8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00.zip",
           "region": "us-east-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-file-publishing-role-121775527089-us-east-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
@@ -38,26 +38,26 @@
         "packaging": "zip"
       },
       "destinations": {
-        "121775527089-us-east-1-6649af7c": {
-          "bucketName": "cdk-hnb659fds-assets-121775527089-us-east-1",
+        "000000000000-us-east-1-c2700e76": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
           "objectKey": "1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae.zip",
           "region": "us-east-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-file-publishing-role-121775527089-us-east-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
-    "af923678320d510bc39cb34b5c413e8362fa17226d1550f85cc8c2dd7ec93ca9": {
+    "a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378": {
       "displayName": "TelehealthBackend-dev Template",
       "source": {
         "path": "TelehealthBackend-dev.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "121775527089-us-east-1-ba61ea7d": {
-          "bucketName": "cdk-hnb659fds-assets-121775527089-us-east-1",
-          "objectKey": "af923678320d510bc39cb34b5c413e8362fa17226d1550f85cc8c2dd7ec93ca9.json",
+        "000000000000-us-east-1-ca56e10c": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
+          "objectKey": "a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378.json",
           "region": "us-east-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::121775527089:role/cdk-hnb659fds-file-publishing-role-121775527089-us-east-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     }
