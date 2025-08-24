@@ -266,6 +266,151 @@
     "aws:cdk:path": "TelehealthBackend-dev/AppointmentsTable/Resource"
    }
   },
+  "ChatSessionsTable661CA7F4": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "sessionId",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "sessionId",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "TableName": "ChatSessionsTable",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/ChatSessionsTable/Resource"
+   }
+  },
+  "PatientsLambdaLogGroup14F50B1C": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/PatientsLambda",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/PatientsLambdaLogGroup/Resource"
+   }
+  },
+  "DoctorsLambdaLogGroup31D27A33": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/DoctorsLambda",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/DoctorsLambdaLogGroup/Resource"
+   }
+  },
+  "AppointmentsLambdaLogGroup5CB9D390": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/AppointmentsLambda",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/AppointmentsLambdaLogGroup/Resource"
+   }
+  },
+  "ApiAccessLogGroupCEA70788": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/apigateway/telehealth-api-access-logs",
+    "RetentionInDays": 7,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/ApiAccessLogGroup/Resource"
+   }
+  },
   "LambdaExecutionRoleD5C26073": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -319,6 +464,17 @@
    "Properties": {
     "PolicyDocument": {
      "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams",
+        "logs:DescribeLogGroups"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
       {
        "Action": [
         "dynamodb:BatchGetItem",
@@ -435,6 +591,34 @@
          ]
         }
        ]
+      },
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ChatSessionsTable661CA7F4",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
       }
      ],
      "Version": "2012-10-17"
@@ -455,7 +639,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
-     "S3Key": "c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f.zip"
+     "S3Key": "0dfe4e009d1af435ef2fba6f281a5717feb365b4870420a56564b4c3aa769976.zip"
     },
     "Environment": {
      "Variables": {
@@ -463,10 +647,18 @@
        "Ref": "PatientsTable087EEB9B"
       },
       "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
-      "REGION": "us-east-1"
+      "REGION": "us-east-1",
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "INFO",
+      "SERVICE_NAME": "patients"
      }
     },
     "Handler": "dist/handler.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "PatientsLambdaLogGroup14F50B1C"
+     }
+    },
     "Role": {
      "Fn::GetAtt": [
       "LambdaExecutionRoleD5C26073",
@@ -496,7 +688,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/PatientsLambda/Resource",
-    "aws:asset:path": "asset.c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f",
+    "aws:asset:path": "asset.0dfe4e009d1af435ef2fba6f281a5717feb365b4870420a56564b4c3aa769976",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -506,7 +698,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
-     "S3Key": "8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00.zip"
+     "S3Key": "94cb03e91db866e9d945d167092c024719494973e52708a3aaf78ede217156d7.zip"
     },
     "Environment": {
      "Variables": {
@@ -514,10 +706,18 @@
        "Ref": "DoctorsTable4E450B5B"
       },
       "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
-      "REGION": "us-east-1"
+      "REGION": "us-east-1",
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "INFO",
+      "SERVICE_NAME": "doctors"
      }
     },
     "Handler": "dist/handler.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "DoctorsLambdaLogGroup31D27A33"
+     }
+    },
     "Role": {
      "Fn::GetAtt": [
       "LambdaExecutionRoleD5C26073",
@@ -547,7 +747,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/DoctorsLambda/Resource",
-    "aws:asset:path": "asset.8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00",
+    "aws:asset:path": "asset.94cb03e91db866e9d945d167092c024719494973e52708a3aaf78ede217156d7",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -557,7 +757,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
-     "S3Key": "1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae.zip"
+     "S3Key": "4c4ac20fa17ee91609adb21c61afb1621d12761f6f5f5e635559a61676c56a21.zip"
     },
     "Environment": {
      "Variables": {
@@ -565,10 +765,18 @@
        "Ref": "AppointmentsTable8553CB1E"
       },
       "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
-      "REGION": "us-east-1"
+      "REGION": "us-east-1",
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "INFO",
+      "SERVICE_NAME": "appointments"
      }
     },
     "Handler": "dist/handler.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "AppointmentsLambdaLogGroup5CB9D390"
+     }
+    },
     "Role": {
      "Fn::GetAtt": [
       "LambdaExecutionRoleD5C26073",
@@ -598,7 +806,96 @@
    ],
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/AppointmentsLambda/Resource",
-    "aws:asset:path": "asset.1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae",
+    "aws:asset:path": "asset.4c4ac20fa17ee91609adb21c61afb1621d12761f6f5f5e635559a61676c56a21",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ChatbotLambdaLogGroup28F78671": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/ChatbotLambda",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/ChatbotLambdaLogGroup/Resource"
+   }
+  },
+  "ChatbotLambda4595A29D": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
+     "S3Key": "235505f5e092b8dde8047d3c761b2515df533c945d559195dc2f7fac855f4022.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "CHAT_SESSIONS_TABLE": {
+       "Ref": "ChatSessionsTable661CA7F4"
+      },
+      "JWT_SECRET": "your-super-secret-jwt-key-change-in-production",
+      "OPENAI_API_KEY": "your-openai-api-key-here",
+      "OPENAI_MODEL": "gpt-3.5-turbo",
+      "MAX_TOKENS": "1000",
+      "TEMPERATURE": "0.7",
+      "REGION": "us-east-1",
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "INFO",
+      "SERVICE_NAME": "chatbot"
+     }
+    },
+    "Handler": "dist/handler.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "ChatbotLambdaLogGroup28F78671"
+     }
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "LambdaExecutionRoleD5C26073",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "TelehealthBackend"
+     }
+    ],
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "LambdaExecutionRoleDefaultPolicy6D69732F",
+    "LambdaExecutionRoleD5C26073"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/ChatbotLambda/Resource",
+    "aws:asset:path": "asset.235505f5e092b8dde8047d3c761b2515df533c945d559195dc2f7fac855f4022",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -2052,10 +2349,365 @@
     "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--appointments--doctor/Resource"
    }
   },
+  "TelehealthAPIPOSTchatstartChatbotIntegration00807144": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--chat--start/ChatbotIntegration/Resource"
+   }
+  },
+  "TelehealthAPIPOSTchatstartChatbotIntegrationPermission9B9058C9": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/start"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--chat--start/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIPOSTchatstartD76B639A": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "POST /chat/start",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--chat--start/Resource"
+   }
+  },
+  "TelehealthAPIOPTIONSchatstartChatbotIntegrationPermissionB7F4F9C5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/start"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--start/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIOPTIONSchatstartFBA7F914": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "OPTIONS /chat/start",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--start/Resource"
+   }
+  },
+  "TelehealthAPIPOSTchatmessageChatbotIntegrationPermission3919C795": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/message"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--chat--message/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIPOSTchatmessageA6C55AA4": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "POST /chat/message",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/POST--chat--message/Resource"
+   }
+  },
+  "TelehealthAPIOPTIONSchatmessageChatbotIntegrationPermission98D9E014": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/message"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--message/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIOPTIONSchatmessageED2A713F": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "OPTIONS /chat/message",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--message/Resource"
+   }
+  },
+  "TelehealthAPIGETchatsessionssessionIdChatbotIntegrationPermissionE4A1D3FC": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/sessions/{sessionId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--chat--sessions--{sessionId}/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIGETchatsessionssessionId5DA81E6A": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /chat/sessions/{sessionId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/GET--chat--sessions--{sessionId}/Resource"
+   }
+  },
+  "TelehealthAPIOPTIONSchatsessionssessionIdChatbotIntegrationPermissionA7153E1C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ChatbotLambda4595A29D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "TelehealthAPIAC6B8BC4"
+       },
+       "/*/*/chat/sessions/{sessionId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--sessions--{sessionId}/ChatbotIntegration-Permission"
+   }
+  },
+  "TelehealthAPIOPTIONSchatsessionssessionIdB9BD6163": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "TelehealthAPIAC6B8BC4"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "OPTIONS /chat/sessions/{sessionId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--sessions--{sessionId}/Resource"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12OwW6EMAxEv2XvwS3wBbuVqvZUxPa+MiGlLiRB2FmEovz7KqBKVU/zxh6NXUFVlvB8wpUL3Y/FRB3Eq6AeFa58i/3m0Pq+g/iJ3WTUy5fbISlCC7H1x2zXxk+kt2wPSmpC2/UI8TU4LeRd3v3lxiyWmMm7pLi+IbMRhnMWxTVcgh6NXJCNwpkGFLPidq8gvonM55lyRZZsr4LD/soBedT6IAe9OzHDgr9n/9k9l5JqDfuwaKP2B3IPuSEHPoLMQZJqNvn27qmGsoKyPP0wUbEEJ2QNtIc+APB2agJQAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12O3WrDMAyFn6X3rrYkT9AO9gODhXT3RXE8T01ih0heCMbvPpxQGLs635EO0imhLAp4PODCR931x4FaiBdB3Stc+Bq71eHouxbiJ7aDUU9fboOkBm8Z4ru3L7MPU17cOSnCEWLj9/ymtR9Ir9nulNSAY9shxOfgtJB3efeXazOPxEzeJcXVFZmNMJyyKK7gHHRv5IxsFE5kUcyC608J8VVkOk2UT2TJ9iJotyo75FHjg+z05sTYGe9v/9ktl5JqDPswa6O2AvkOOZsDH0GmIEnVq3x791BBUUJRHG5MdJyDExoNNLv+AiATLYhsAQAA"
    },
    "Metadata": {
     "aws:cdk:path": "TelehealthBackend-dev/CDKMetadata/Default"
@@ -2116,6 +2768,19 @@
    "Value": {
     "Fn::GetAtt": [
      "AppointmentsLambda8428FB86",
+     "Arn"
+    ]
+   }
+  },
+  "ChatSessionsTableName": {
+   "Value": {
+    "Ref": "ChatSessionsTable661CA7F4"
+   }
+  },
+  "ChatbotLambdaArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ChatbotLambda4595A29D",
      "Arn"
     ]
    }

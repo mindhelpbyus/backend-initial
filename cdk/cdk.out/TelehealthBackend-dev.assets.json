@@ -1,61 +1,76 @@
 {
   "version": "48.0.0",
   "files": {
-    "c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f": {
+    "0dfe4e009d1af435ef2fba6f281a5717feb365b4870420a56564b4c3aa769976": {
       "displayName": "PatientsLambda/Code",
       "source": {
-        "path": "asset.c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f",
+        "path": "asset.0dfe4e009d1af435ef2fba6f281a5717feb365b4870420a56564b4c3aa769976",
         "packaging": "zip"
       },
       "destinations": {
-        "000000000000-us-east-1-815d6850": {
+        "000000000000-us-east-1-9db6aea0": {
           "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
-          "objectKey": "c1c2cf0362c8f09e4c1fd492529e8046c6a0f30ceab5d1c6aafdd3417d3c6f4f.zip",
+          "objectKey": "0dfe4e009d1af435ef2fba6f281a5717feb365b4870420a56564b4c3aa769976.zip",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
-    "8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00": {
+    "94cb03e91db866e9d945d167092c024719494973e52708a3aaf78ede217156d7": {
       "displayName": "DoctorsLambda/Code",
       "source": {
-        "path": "asset.8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00",
+        "path": "asset.94cb03e91db866e9d945d167092c024719494973e52708a3aaf78ede217156d7",
         "packaging": "zip"
       },
       "destinations": {
-        "000000000000-us-east-1-33bdb205": {
+        "000000000000-us-east-1-f9d7a304": {
           "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
-          "objectKey": "8675eb75dac38d5fe27169effcf48fff857a89f4ccbc4c9f22e63c7c45a62f00.zip",
+          "objectKey": "94cb03e91db866e9d945d167092c024719494973e52708a3aaf78ede217156d7.zip",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
-    "1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae": {
+    "4c4ac20fa17ee91609adb21c61afb1621d12761f6f5f5e635559a61676c56a21": {
       "displayName": "AppointmentsLambda/Code",
       "source": {
-        "path": "asset.1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae",
+        "path": "asset.4c4ac20fa17ee91609adb21c61afb1621d12761f6f5f5e635559a61676c56a21",
         "packaging": "zip"
       },
       "destinations": {
-        "000000000000-us-east-1-c2700e76": {
+        "000000000000-us-east-1-ac62eb7a": {
           "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
-          "objectKey": "1843eaf74e91dba17a87377318624537951a1d39fa337b2b0e89140cc6f8abae.zip",
+          "objectKey": "4c4ac20fa17ee91609adb21c61afb1621d12761f6f5f5e635559a61676c56a21.zip",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }
       }
     },
-    "a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378": {
+    "235505f5e092b8dde8047d3c761b2515df533c945d559195dc2f7fac855f4022": {
+      "displayName": "ChatbotLambda/Code",
+      "source": {
+        "path": "asset.235505f5e092b8dde8047d3c761b2515df533c945d559195dc2f7fac855f4022",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "000000000000-us-east-1-0108ccd8": {
+          "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
+          "objectKey": "235505f5e092b8dde8047d3c761b2515df533c945d559195dc2f7fac855f4022.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
+        }
+      }
+    },
+    "0e5f7304e7b77a239a50018f51215bbcfa2e3d2574a4a4a945fe7809fc174e74": {
       "displayName": "TelehealthBackend-dev Template",
       "source": {
         "path": "TelehealthBackend-dev.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "000000000000-us-east-1-ca56e10c": {
+        "000000000000-us-east-1-b073bea1": {
           "bucketName": "cdk-hnb659fds-assets-000000000000-us-east-1",
-          "objectKey": "a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378.json",
+          "objectKey": "0e5f7304e7b77a239a50018f51215bbcfa2e3d2574a4a4a945fe7809fc174e74.json",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-file-publishing-role-000000000000-us-east-1"
         }

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telehealth Backend Architecture</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .diagram-container {
+            padding: 40px;
+            background: #fafbfc;
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .layer {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid #e1e8ed;
+        }
+        
+        .layer h3 {
+            margin: 0 0 20px 0;
+            color: #2c3e50;
+            font-size: 1.3em;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .component {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .component:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        
+        .component h4 {
+            margin: 0 0 8px 0;
+            color: #495057;
+            font-size: 1em;
+        }
+        
+        .component p {
+            margin: 0;
+            font-size: 0.85em;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        
+        /* Component type colors */
+        .frontend { border-color: #28a745; background: #f8fff9; }
+        .api-gateway { border-color: #17a2b8; background: #f0fcff; }
+        .lambda { border-color: #ffc107; background: #fffdf0; }
+        .database { border-color: #dc3545; background: #fff5f5; }
+        .external { border-color: #6f42c1; background: #f8f5ff; }
+        .monitoring { border-color: #fd7e14; background: #fff8f0; }
+        
+        .data-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .flow-step {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .flow-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .tech-category {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tech-category h4 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .tech-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f3f4;
+            color: #495057;
+            font-size: 0.9em;
+        }
+        
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.2em;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            padding: 5px 0;
+            color: #495057;
+            font-size: 0.9em;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #667eea;
+            border-radius: 2px;
+        }
+        
+        .deployment-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .deployment-info h4 {
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+        }
+        
+        .deployment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .deployment-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .deployment-item strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .deployment-item span {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-flow {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Telehealth Backend Architecture</h1>
+            <p>Mental Health Platform - Serverless AWS Infrastructure</p>
+        </div>
+        
+        <div class="diagram-container">
+            <h2 class="section-title">System Architecture Overview</h2>
+            
+            <div class="architecture-diagram">
+                <!-- Client Layer -->
+                <div class="layer">
+                    <h3>Client Layer</h3>
+                    
+                    <div class="component frontend">
+                        <h4>Web Frontend</h4>
+                        <p>React/HTML5 applications for patients and providers</p>
+                    </div>
+                    
+                    <div class="component frontend">
+                        <h4>Kadhaippoma Chatbot UI</h4>
+                        <p>AI-powered mental health intake interface</p>
+                    </div>
+                    
+                    <div class="component frontend">
+                        <h4>API Explorer</h4>
+                        <p>Interactive API testing and documentation</p>
+                    </div>
+                    
+                    <div class="component external">
+                        <h4>Mobile Apps</h4>
+                        <p>Future native iOS/Android applications</p>
+                    </div>
+                </div>
+                
+                <!-- API & Compute Layer -->
+                <div class="layer">
+                    <h3>API & Compute Layer</h3>
+                    
+                    <div class="component api-gateway">
+                        <h4>API Gateway (HTTP API)</h4>
+                        <p>RESTful endpoints with CORS, authentication, and routing</p>
+                    </div>
+                    
+                    <div class="component lambda">
+                        <h4>Patients Lambda</h4>
+                        <p>Authentication, patient CRUD, profile management</p>
+                    </div>
+                    
+                    <div class="component lambda">
+                        <h4>Doctors Lambda</h4>
+                        <p>Doctor profiles, specializations, availability</p>
+                    </div>
+                    
+                    <div class="component lambda">
+                        <h4>Appointments Lambda</h4>
+                        <p>Scheduling, booking, status management</p>
+                    </div>
+                    
+                    <div class="component lambda">
+                        <h4>Chatbot Lambda</h4>
+                        <p>AI conversations, intake data extraction</p>
+                    </div>
+                    
+                    <div class="component external">
+                        <h4>OpenAI API</h4>
+                        <p>GPT-3.5-turbo for natural language processing</p>
+                    </div>
+                </div>
+                
+                <!-- Data & Infrastructure Layer -->
+                <div class="layer">
+                    <h3>Data & Infrastructure</h3>
+                    
+                    <div class="component database">
+                        <h4>PatientsTable</h4>
+                        <p>User profiles, authentication, medical history</p>
+                    </div>
+                    
+                    <div class="component database">
+                        <h4>DoctorsTable</h4>
+                        <p>Provider profiles, specializations, ratings</p>
+                    </div>
+                    
+                    <div class="component database">
+                        <h4>AppointmentsTable</h4>
+                        <p>Scheduling data, status, payments</p>
+                    </div>
+                    
+                    <div class="component database">
+                        <h4>ChatSessionsTable</h4>
+                        <p>Conversation history, intake data</p>
+                    </div>
+                    
+                    <div class="component monitoring">
+                        <h4>CloudWatch Logs</h4>
+                        <p>Centralized logging, monitoring, analytics</p>
+                    </div>
+                    
+                    <div class="component monitoring">
+                        <h4>IAM Roles</h4>
+                        <p>Security, permissions, access control</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Request Flow</h2>
+            
+            <div class="data-flow">
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <h4>Client Request</h4>
+                    <p>Frontend sends HTTP request to API Gateway endpoint</p>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <h4>API Gateway</h4>
+                    <p>Routes request to appropriate Lambda function based on path</p>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <h4>Lambda Processing</h4>
+                    <p>Business logic execution, validation, external API calls</p>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <h4>Data Operations</h4>
+                    <p>DynamoDB queries, CloudWatch logging, response generation</p>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Key Features</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h4>Authentication & Security</h4>
+                    <ul class="feature-list">
+                        <li>JWT-based authentication</li>
+                        <li>Password hashing with bcrypt</li>
+                        <li>IAM role-based access control</li>
+                        <li>CORS configuration</li>
+                        <li>API rate limiting</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Data Management</h4>
+                    <ul class="feature-list">
+                        <li>DynamoDB with GSI indexes</li>
+                        <li>Point-in-time recovery</li>
+                        <li>Pay-per-request billing</li>
+                        <li>Structured data validation</li>
+                        <li>Soft delete patterns</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>AI Integration</h4>
+                    <ul class="feature-list">
+                        <li>OpenAI GPT-3.5-turbo integration</li>
+                        <li>Structured intake data extraction</li>
+                        <li>Conversation context management</li>
+                        <li>Appointment recommendation logic</li>
+                        <li>Fallback demo mode</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Monitoring & Observability</h4>
+                    <ul class="feature-list">
+                        <li>Structured JSON logging</li>
+                        <li>CloudWatch integration</li>
+                        <li>Performance monitoring</li>
+                        <li>Error tracking and alerting</li>
+                        <li>Business metrics collection</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Development & Deployment</h4>
+                    <ul class="feature-list">
+                        <li>AWS CDK infrastructure as code</li>
+                        <li>TypeScript/Node.js runtime</li>
+                        <li>Automated build scripts</li>
+                        <li>Local development with Docker</li>
+                        <li>CI/CD ready architecture</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Scalability & Performance</h4>
+                    <ul class="feature-list">
+                        <li>Serverless auto-scaling</li>
+                        <li>DynamoDB on-demand scaling</li>
+                        <li>Lambda cold start optimization</li>
+                        <li>API Gateway caching</li>
+                        <li>Multi-region deployment ready</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Technology Stack</h2>
+            
+            <div class="tech-stack">
+                <div class="tech-category">
+                    <h4>Infrastructure</h4>
+                    <ul class="tech-list">
+                        <li>AWS CDK (Python)</li>
+                        <li>AWS Lambda (Node.js 18.x)</li>
+                        <li>API Gateway HTTP API</li>
+                        <li>DynamoDB</li>
+                        <li>CloudWatch Logs</li>
+                        <li>IAM</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>Backend Development</h4>
+                    <ul class="tech-list">
+                        <li>TypeScript</li>
+                        <li>Node.js</li>
+                        <li>Webpack</li>
+                        <li>Jest (Testing)</li>
+                        <li>ESLint</li>
+                        <li>Prettier</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>External Services</h4>
+                    <ul class="tech-list">
+                        <li>OpenAI API</li>
+                        <li>JWT Authentication</li>
+                        <li>bcrypt</li>
+                        <li>uuid</li>
+                        <li>AWS SDK v3</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-category">
+                    <h4>Development Tools</h4>
+                    <ul class="tech-list">
+                        <li>Docker & Docker Compose</li>
+                        <li>DynamoDB Local</li>
+                        <li>LocalStack</li>
+                        <li>Python Scripts</li>
+                        <li>Shell Scripts</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="deployment-info">
+                <h4>Deployment Configuration</h4>
+                <div class="deployment-grid">
+                    <div class="deployment-item">
+                        <strong>Production</strong>
+                        <span>AWS Account: 121775527089<br>Region: us-east-1<br>Stack: TelehealthBackend-prod</span>
+                    </div>
+                    <div class="deployment-item">
+                        <strong>Development</strong>
+                        <span>Local Docker services<br>DynamoDB Local<br>API Explorer on :8080</span>
+                    </div>
+                    <div class="deployment-item">
+                        <strong>Testing</strong>
+                        <span>LocalStack simulation<br>Jest unit tests<br>Integration tests</span>
+                    </div>
+                    <div class="deployment-item">
+                        <strong>Monitoring</strong>
+                        <span>CloudWatch Logs<br>Performance metrics<br>Error tracking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

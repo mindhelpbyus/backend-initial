@@ -24,7 +24,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-deploy-role-000000000000-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-cfn-exec-role-000000000000-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/a9c485359d004b9375f0bf8b9fd618a64bd61fe5112a9bc02fe5cf6572d18378.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/0e5f7304e7b77a239a50018f51215bbcfa2e3d2574a4a4a945fe7809fc174e74.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -105,6 +105,44 @@
             "data": "AppointmentsTable8553CB1E"
           }
         ],
+        "/TelehealthBackend-dev/ChatSessionsTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "ChatSessionsTable661CA7F4"
+            }
+          }
+        ],
+        "/TelehealthBackend-dev/ChatSessionsTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatSessionsTable661CA7F4"
+          }
+        ],
+        "/TelehealthBackend-dev/PatientsLambdaLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PatientsLambdaLogGroup14F50B1C"
+          }
+        ],
+        "/TelehealthBackend-dev/DoctorsLambdaLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DoctorsLambdaLogGroup31D27A33"
+          }
+        ],
+        "/TelehealthBackend-dev/AppointmentsLambdaLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AppointmentsLambdaLogGroup5CB9D390"
+          }
+        ],
+        "/TelehealthBackend-dev/ApiAccessLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiAccessLogGroupCEA70788"
+          }
+        ],
         "/TelehealthBackend-dev/LambdaExecutionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -133,6 +171,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsLambda8428FB86"
+          }
+        ],
+        "/TelehealthBackend-dev/ChatbotLambdaLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatbotLambdaLogGroup28F78671"
+          }
+        ],
+        "/TelehealthBackend-dev/ChatbotLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatbotLambda4595A29D"
           }
         ],
         "/TelehealthBackend-dev/TelehealthAPI/Resource": [
@@ -453,6 +503,84 @@
             "data": "TelehealthAPIGETappointmentsdoctor7159B295"
           }
         ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--chat--start/ChatbotIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTchatstartChatbotIntegration00807144"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--chat--start/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTchatstartChatbotIntegrationPermission9B9058C9"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--chat--start/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTchatstartD76B639A"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--start/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatstartChatbotIntegrationPermissionB7F4F9C5"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--start/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatstartFBA7F914"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--chat--message/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTchatmessageChatbotIntegrationPermission3919C795"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/POST--chat--message/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIPOSTchatmessageA6C55AA4"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--message/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatmessageChatbotIntegrationPermission98D9E014"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--message/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatmessageED2A713F"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--chat--sessions--{sessionId}/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETchatsessionssessionIdChatbotIntegrationPermissionE4A1D3FC"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/GET--chat--sessions--{sessionId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIGETchatsessionssessionId5DA81E6A"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--sessions--{sessionId}/ChatbotIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatsessionssessionIdChatbotIntegrationPermissionA7153E1C"
+          }
+        ],
+        "/TelehealthBackend-dev/TelehealthAPI/OPTIONS--chat--sessions--{sessionId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TelehealthAPIOPTIONSchatsessionssessionIdB9BD6163"
+          }
+        ],
         "/TelehealthBackend-dev/ApiUrl": [
           {
             "type": "aws:cdk:logicalId",
@@ -493,6 +621,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "AppointmentsLambdaArn"
+          }
+        ],
+        "/TelehealthBackend-dev/ChatSessionsTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatSessionsTableName"
+          }
+        ],
+        "/TelehealthBackend-dev/ChatbotLambdaArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatbotLambdaArn"
           }
         ],
         "/TelehealthBackend-dev/CDKMetadata/Default": [

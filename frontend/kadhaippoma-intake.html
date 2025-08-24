@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadhaippoma - Mental Health Intake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .chat-section {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .chat-header h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .chat-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .chat-container {
+            flex: 1;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message.user .message-content {
+            background: #007bff;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #007bff;
+        }
+
+        .send-button {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background: #0056b3;
+        }
+
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .status-indicator {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .appointment-suggestion {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .appointment-suggestion button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .welcome-section {
+                padding: 30px 20px;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .chat-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Kadhaippoma</h1>
+            <p>Welcome to your mental health journey. I'm here to listen, understand, and help you take the first step towards better mental wellness. Let's have a conversation about how you're feeling and what support you might need.</p>
+        </div>
+        
+        <div class="chat-section">
+            <div class="chat-header">
+                <h2>Mental Health Intake Chat</h2>
+                <p>Share your thoughts and feelings in a safe, confidential space</p>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="status-indicator" id="statusIndicator">
+                        Connecting to Kadhaippoma...
+                    </div>
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Type your message here..." 
+                        disabled
+                    >
+                    <button class="send-button" id="sendButton" disabled>Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class KadhaippomaChat {
+            constructor() {
+                this.apiUrl = 'https://unknown.execute-api.localhost.localstack.cloud:4566';
+                this.sessionId = null;
+                this.isConnected = false;
+                
+                this.chatMessages = document.getElementById('chatMessages');
+                this.chatInput = document.getElementById('chatInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.statusIndicator = document.getElementById('statusIndicator');
+                this.typingIndicator = document.getElementById('typingIndicator');
+                
+                this.initializeChat();
+                this.setupEventListeners();
+            }
+            
+            async initializeChat() {
+                try {
+                    this.updateStatus('Starting conversation...');
+                    
+                    const response = await fetch(`${this.apiUrl}/chat/start`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({})
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    this.sessionId = data.sessionId;
+                    
+                    this.addMessage(data.message.message, 'bot');
+                    this.updateStatus('Connected - You can start typing');
+                    this.enableInput();
+                    
+                } catch (error) {
+                    console.error('Failed to initialize chat:', error);
+                    this.updateStatus('Connection failed. Using demo mode.');
+                    this.enableDemoMode();
+                }
+            }
+            
+            enableDemoMode() {
+                this.sessionId = 'demo-session';
+                this.isConnected = false;
+                this.addMessage("Hello! I'm Kadhaippoma, your mental health intake assistant. I'm here to help you get started on your mental health journey. How are you feeling today, and what brings you here?", 'bot');
+                this.enableInput();
+            }
+            
+            setupEventListeners() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                this.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendMessage();
+                    }
+                });
+            }
+            
+            async sendMessage() {
+                const message = this.chatInput.value.trim();
+                if (!message) return;
+                
+                this.addMessage(message, 'user');
+                this.chatInput.value = '';
+                this.disableInput();
+                this.showTyping();
+                
+                try {
+                    let botResponse;
+                    
+                    if (this.isConnected) {
+                        const response = await fetch(`${this.apiUrl}/chat/message`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                sessionId: this.sessionId,
+                                message: message
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        botResponse = data.message.message;
+                        
+                        if (data.shouldScheduleAppointment) {
+                            this.showAppointmentSuggestion();
+                        }
+                    } else {
+                        // Demo mode responses
+                        botResponse = this.getDemoResponse(message);
+                    }
+                    
+                    setTimeout(() => {
+                        this.hideTyping();
+                        this.addMessage(botResponse, 'bot');
+                        this.enableInput();
+                    }, 1000 + Math.random() * 2000);
+                    
+                } catch (error) {
+                    console.error('Failed to send message:', error);
+                    this.hideTyping();
+                    this.addMessage("I'm sorry, I'm having trouble connecting right now. Please try again in a moment.", 'bot');
+                    this.enableInput();
+                }
+            }
+            
+            getDemoResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                if (lowerMessage.includes('anxious') || lowerMessage.includes('anxiety')) {
+                    return "I hear that you're experiencing anxiety. That takes courage to share. Can you tell me how long you've been feeling this way?";
+                } else if (lowerMessage.includes('depressed') || lowerMessage.includes('depression')) {
+                    return "Thank you for trusting me with that. Depression can feel overwhelming. On a scale of 1-10, how would you rate how you're feeling today?";
+                } else if (lowerMessage.match(/\b\d+\b/)) {
+                    const severity = lowerMessage.match(/\b\d+\b/)[0];
+                    return `I understand you're rating your feelings as ${severity}/10. That helps me understand better. Have you experienced these feelings before, or is this something new for you?`;
+                } else if (lowerMessage.includes('therapy') || lowerMessage.includes('counseling')) {
+                    return "It sounds like you're interested in therapy. Have you worked with a therapist or counselor before?";
+                } else if (lowerMessage.includes('yes') || lowerMessage.includes('no')) {
+                    this.showAppointmentSuggestion();
+                    return "Thank you for sharing that with me. Based on what you've told me, it sounds like you could benefit from speaking with one of our mental health professionals. Would you like me to help you schedule an appointment?";
+                } else {
+                    return "I understand. Can you tell me more about that? I'm here to listen and help you work through whatever you're experiencing.";
+                }
+            }
+            
+            addMessage(message, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.textContent = message;
+                
+                messageDiv.appendChild(contentDiv);
+                this.chatMessages.appendChild(messageDiv);
+                
+                this.scrollToBottom();
+            }
+            
+            showAppointmentSuggestion() {
+                const suggestionDiv = document.createElement('div');
+                suggestionDiv.className = 'appointment-suggestion';
+                suggestionDiv.innerHTML = `
+                    <p><strong>Ready for the next step?</strong></p>
+                    <p>Based on our conversation, I think you would benefit from speaking with one of our mental health professionals.</p>
+                    <button onclick="this.scheduleAppointment()">Schedule an Appointment</button>
+                `;
+                this.chatMessages.appendChild(suggestionDiv);
+                this.scrollToBottom();
+            }
+            
+            scheduleAppointment() {
+                alert('Appointment scheduling feature coming soon! Please contact us directly for now.');
+            }
+            
+            showTyping() {
+                this.typingIndicator.style.display = 'block';
+                this.scrollToBottom();
+            }
+            
+            hideTyping() {
+                this.typingIndicator.style.display = 'none';
+            }
+            
+            enableInput() {
+                this.chatInput.disabled = false;
+                this.sendButton.disabled = false;
+                this.chatInput.focus();
+            }
+            
+            disableInput() {
+                this.chatInput.disabled = true;
+                this.sendButton.disabled = true;
+            }
+            
+            updateStatus(message) {
+                this.statusIndicator.textContent = message;
+            }
+            
+            scrollToBottom() {
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+        }
+        
+        // Initialize the chat when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new KadhaippomaChat();
+        });
+        
+        // Global function for appointment scheduling
+        function scheduleAppointment() {
+            alert('Appointment scheduling feature coming soon! Please contact us directly for now.');
+        }
+    </script>
+</body>
+</html>

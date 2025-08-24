@@ -1,0 +1,54 @@
+<svg width="400" height="600" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="600" fill="#f5f5f5"/>
+  
+  <!-- Hair -->
+  <path d="M120 120 Q200 80 280 120 Q290 140 285 180 Q280 220 270 260 Q260 300 250 340 Q240 380 230 420 Q220 460 210 500 Q150 480 120 420 Q110 380 115 340 Q120 300 125 260 Q130 220 125 180 Q120 140 120 120 Z" fill="#4a3728"/>
+  
+  <!-- Face -->
+  <ellipse cx="200" cy="200" rx="60" ry="70" fill="#d4956d"/>
+  
+  <!-- Forehead dot -->
+  <circle cx="200" cy="160" r="4" fill="white"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="185" cy="185" rx="8" ry="6" fill="white"/>
+  <ellipse cx="215" cy="185" rx="8" ry="6" fill="white"/>
+  <circle cx="185" cy="185" r="4" fill="black"/>
+  <circle cx="215" cy="185" r="4" fill="black"/>
+  
+  <!-- Eyebrows -->
+  <path d="M175 175 Q185 170 195 175" stroke="black" stroke-width="2" fill="none"/>
+  <path d="M205 175 Q215 170 225 175" stroke="black" stroke-width="2" fill="none"/>
+  
+  <!-- Nose -->
+  <path d="M200 195 Q205 205 200 210" stroke="#c4856d" stroke-width="1" fill="none"/>
+  
+  <!-- Mouth -->
+  <path d="M190 220 Q200 230 210 220" fill="white" stroke="#c4856d" stroke-width="1"/>
+  
+  <!-- Cheeks -->
+  <circle cx="165" cy="210" r="8" fill="#c4856d" opacity="0.5"/>
+  <circle cx="235" cy="210" r="8" fill="#c4856d" opacity="0.5"/>
+  
+  <!-- Earrings -->
+  <circle cx="150" cy="200" r="6" fill="#ffd700"/>
+  <circle cx="250" cy="200" r="6" fill="#ffd700"/>
+  
+  <!-- Neck -->
+  <rect x="180" y="270" width="40" height="50" fill="#d4956d"/>
+  
+  <!-- Blouse -->
+  <rect x="160" y="320" width="80" height="100" fill="#4dd0e1"/>
+  
+  <!-- Sari drape -->
+  <path d="M160 320 Q120 350 100 400 Q90 450 110 500 Q130 550 200 580 Q270 550 290 500 Q310 450 300 400 Q280 350 240 320" fill="#cddc39"/>
+  
+  <!-- Sari border -->
+  <path d="M160 320 Q120 350 100 400 Q90 450 110 500 Q130 550 200 580" stroke="#ff9800" stroke-width="8" fill="none"/>
+  
+  <!-- Sari pattern -->
+  <path d="M180 400 Q200 420 220 400" stroke="#ff9800" stroke-width="3" fill="none"/>
+  <path d="M170 450 Q200 470 230 450" stroke="#ff9800" stroke-width="3" fill="none"/>
+  <path d="M160 500 Q200 520 240 500" stroke="#ff9800" stroke-width="3" fill="none"/>
+</svg>
