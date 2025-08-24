@@ -27,29 +27,29 @@ class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         # Handle Lambda invocation proxy
         if self.path.startswith('/lambda-proxy/'):
             self.handle_lambda_proxy()
-        # Handle API Gateway proxy
-        elif self.path.startswith('/api-proxy'):
+        # Handle API Gateway proxy (both local and AWS)
+        elif self.path.startswith('/api-proxy') or self.path.startswith('/aws-api-proxy'):
             self.handle_api_proxy()
         else:
             super().do_POST()
 
     def do_GET(self):
-        # Handle API Gateway proxy for GET requests
-        if self.path.startswith('/api-proxy'):
+        # Handle API Gateway proxy for GET requests (both local and AWS)
+        if self.path.startswith('/api-proxy') or self.path.startswith('/aws-api-proxy'):
             self.handle_api_proxy()
         else:
             super().do_GET()
 
     def do_PUT(self):
-        # Handle API Gateway proxy for PUT requests
-        if self.path.startswith('/api-proxy'):
+        # Handle API Gateway proxy for PUT requests (both local and AWS)
+        if self.path.startswith('/api-proxy') or self.path.startswith('/aws-api-proxy'):
             self.handle_api_proxy()
         else:
             super().do_PUT()
 
     def do_DELETE(self):
-        # Handle API Gateway proxy for DELETE requests
-        if self.path.startswith('/api-proxy'):
+        # Handle API Gateway proxy for DELETE requests (both local and AWS)
+        if self.path.startswith('/api-proxy') or self.path.startswith('/aws-api-proxy'):
             self.handle_api_proxy()
         else:
             super().do_DELETE()
@@ -105,7 +105,13 @@ class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         try:
             # Extract API path from proxy path
             # /api-proxy/auth/signup -> /auth/signup
-            api_path = self.path.replace('/api-proxy', '')
+            # /aws-api-proxy/auth/signup -> /auth/signup (for AWS)
+            if self.path.startswith('/aws-api-proxy'):
+                api_path = self.path.replace('/aws-api-proxy', '')
+                is_aws_request = True
+            else:
+                api_path = self.path.replace('/api-proxy', '')
+                is_aws_request = False
             
             # Read request body for POST/PUT requests
             content_length = int(self.headers.get('Content-Length', 0))
@@ -113,9 +119,18 @@ class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             if content_length > 0:
                 post_data = self.rfile.read(content_length)
             
-            # Forward to LocalStack API Gateway
-            # Use the API Gateway URL from CloudFormation outputs
-            api_gateway_url = f'https://unknown.execute-api.localhost.localstack.cloud:4566{api_path}'
+            # Determine target URL based on request type
+            if is_aws_request:
+                # For AWS requests, use a configurable base URL (will be set by the frontend)
+                if 'X-AWS-API-URL' not in self.headers:
+                    raise Exception('X-AWS-API-URL header is required for AWS requests')
+                
+                base_url = self.headers['X-AWS-API-URL'].rstrip('/')
+                api_gateway_url = f'{base_url}{api_path}'
+                print(f"[AWS PROXY] Forwarding {self.command} {api_path} to {api_gateway_url}")
+            else:
+                # Forward to LocalStack API Gateway
+                api_gateway_url = f'https://unknown.execute-api.localhost.localstack.cloud:4566{api_path}'
             
             # Prepare headers
             headers = {}
@@ -192,7 +207,8 @@ def main():
         with socketserver.TCPServer(("", PORT), CORSHTTPRequestHandler) as httpd:
             print(f"🚀 API Explorer server running at http://localhost:{PORT}")
             print(f"📁 Serving files from: {os.getcwd()}")
-            print(f"🔗 Open http://localhost:{PORT}/api-explorer.html in your browser")
+            print(f"🔗 Local Development: http://localhost:{PORT}/api-explorer.html")
+            print(f"🔗 AWS Production: http://localhost:{PORT}/api-explorer-aws.html")
             print("Press Ctrl+C to stop the server")
             
             try:

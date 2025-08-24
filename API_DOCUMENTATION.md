@@ -18,7 +18,7 @@ This document provides comprehensive API documentation for the Mental Health Pro
 ## API Gateway Endpoints
 
 ### Production (AWS)
-- **Base URL**: `https://{api-id}.execute-api.us-east-1.amazonaws.com/`
+- **Base URL**: `https://lf4digbabc.execute-api.us-east-1.amazonaws.com`
 - **AWS Account**: `121775527089`
 - **Region**: `us-east-1`
 - **Stack Name**: `TelehealthBackend-prod`
