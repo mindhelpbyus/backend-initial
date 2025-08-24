@@ -17,15 +17,17 @@ import {
   AppointmentFilters,
   AppointmentStatus 
 } from "./types";
+import { createLogger, withLogging, PerformanceMonitor } from "../../../shared/logger";
 
 const TABLE = process.env.APPOINTMENTS_TABLE || "AppointmentsTable";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 const doc = getDynamoDBClient();
+const logger = createLogger(process.env.SERVICE_NAME || 'appointments');
 
 // Ensure DynamoDB is using local endpoint in test environment
 if (process.env.DYNAMODB_ENDPOINT) {
-  console.log("Using local DynamoDB endpoint:", process.env.DYNAMODB_ENDPOINT);
+  logger.info("Using local DynamoDB endpoint", { endpoint: process.env.DYNAMODB_ENDPOINT });
 }
 
 function jsonResponse(statusCode: number, body: any): APIGatewayProxyResultV2 {
@@ -160,22 +162,38 @@ async function getFilteredAppointments(filters: AppointmentFilters): Promise<App
   });
 }
 
-export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
+const handlerImpl = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
   const path = event.rawPath || (event.requestContext as any).http?.path || "/";
   const method = (event.requestContext as any).http?.method || event.requestContext?.http?.method;
+  const requestId = (event.requestContext as any).requestId;
   
+  const logContext = {
+    requestId,
+    path,
+    method,
+    userAgent: event.headers?.['user-agent'],
+    ip: event.requestContext?.http?.sourceIp
+  };
+
   try {
     // Create a new appointment
     if (path === "/appointments" && method === "POST") {
+      const monitor = new PerformanceMonitor(logger, 'create_appointment', logContext);
+      
       const body = event.body ? JSON.parse(event.body) : {};
       const validationErrors = validateAppointmentData(body);
       
       if (validationErrors.length > 0) {
+        logger.logValidationError(validationErrors, logContext);
+        monitor.end(false);
         return jsonResponse(400, { message: "Validation failed", errors: validationErrors });
       }
       
       const appointmentId = uuidv4();
       const now = new Date().toISOString();
+      const appointmentContext = { ...logContext, appointmentId, patientId: body.patientId, doctorId: body.doctorId };
+      
+      logger.info('Processing appointment creation request', appointmentContext);
       
       const appointment: Appointment = {
         appointmentId,
@@ -193,40 +211,75 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
         createdAt: now
       };
       
+      const dbStart = Date.now();
       await doc.send(new PutCommand({ TableName: TABLE, Item: appointment }));
+      logger.logDatabaseOperation('put', TABLE, true, Date.now() - dbStart, appointmentContext);
+      
+      logger.logBusinessLogic('appointment_creation', true, { 
+        appointmentId, 
+        patientId: body.patientId, 
+        doctorId: body.doctorId, 
+        scheduleDate: body.scheduleDate 
+      }, appointmentContext);
+      monitor.end(true, { appointmentId });
+      
       return jsonResponse(201, { appointmentId, message: "Appointment created successfully" });
     }
 
     // Get all appointments with filters
     if (path === "/appointments" && method === "GET") {
+      const monitor = new PerformanceMonitor(logger, 'get_appointments', logContext);
+      
       const filters = parseFilters(event.queryStringParameters || null);
+      logger.info('Fetching appointments with filters', { ...logContext, filters });
+      
       const appointments = await getFilteredAppointments(filters);
+      
+      monitor.end(true, { itemCount: appointments.length });
       return jsonResponse(200, { appointments });
     }
 
     // Get appointments for a specific patient
     if (path === "/appointments/patient" && method === "GET") {
+      const monitor = new PerformanceMonitor(logger, 'get_patient_appointments', logContext);
+      
       const patientId = (event.queryStringParameters || {})["patientId"];
       if (!patientId) {
+        logger.logValidationError(['patientId query parameter required'], logContext);
+        monitor.end(false);
         return jsonResponse(400, { message: "patientId query parameter is required" });
       }
+      
+      const patientContext = { ...logContext, patientId };
+      logger.info('Fetching appointments for patient', patientContext);
       
       const filters = parseFilters(event.queryStringParameters || null);
       filters.patientId = patientId;
       const appointments = await getFilteredAppointments(filters);
+      
+      monitor.end(true, { itemCount: appointments.length });
       return jsonResponse(200, { appointments });
     }
 
     // Get appointments for a specific doctor
     if (path === "/appointments/doctor" && method === "GET") {
+      const monitor = new PerformanceMonitor(logger, 'get_doctor_appointments', logContext);
+      
       const doctorId = (event.queryStringParameters || {})["doctorId"];
       if (!doctorId) {
+        logger.logValidationError(['doctorId query parameter required'], logContext);
+        monitor.end(false);
         return jsonResponse(400, { message: "doctorId query parameter is required" });
       }
+      
+      const doctorContext = { ...logContext, doctorId };
+      logger.info('Fetching appointments for doctor', doctorContext);
       
       const filters = parseFilters(event.queryStringParameters || null);
       filters.doctorId = doctorId;
       const appointments = await getFilteredAppointments(filters);
+      
+      monitor.end(true, { itemCount: appointments.length });
       return jsonResponse(200, { appointments });
     }
 
@@ -235,25 +288,42 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
     if (appointmentIdMatch) {
       const appointmentId = decodeURIComponent(appointmentIdMatch[1]);
       const subPath = appointmentIdMatch[2] || "";
+      const appointmentContext = { ...logContext, appointmentId };
 
       // Get specific appointment details
       if (subPath === "" && method === "GET") {
+        const monitor = new PerformanceMonitor(logger, 'get_appointment', appointmentContext);
+        
+        logger.info('Fetching appointment details', appointmentContext);
+        
+        const dbStart = Date.now();
         const result = await doc.send(new GetCommand({ 
           TableName: TABLE, 
           Key: { appointmentId } 
         }));
+        logger.logDatabaseOperation('get', TABLE, true, Date.now() - dbStart, appointmentContext);
         
         if (!result.Item) {
+          logger.warn('Appointment not found', appointmentContext);
+          monitor.end(false);
           return jsonResponse(404, { message: "Appointment not found" });
         }
         
+        const appointment = result.Item as Appointment;
+        const fullContext = { ...appointmentContext, patientId: appointment.patientId, doctorId: appointment.doctorId };
+        
+        monitor.end(true);
         return jsonResponse(200, result.Item);
       }
 
       // Update appointment
       if (subPath === "" && method === "PUT") {
+        const monitor = new PerformanceMonitor(logger, 'update_appointment', appointmentContext);
+        
         const body = event.body ? JSON.parse(event.body) : {};
         const updateData: AppointmentUpdateRequest = body;
+        
+        logger.info('Updating appointment', { ...appointmentContext, fieldsToUpdate: Object.keys(body) });
         
         // Build update expression
         const expressions = [];
@@ -273,6 +343,8 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
         }
         
         if (expressions.length === 0) {
+          logger.logValidationError(['no fields to update'], appointmentContext);
+          monitor.end(false);
           return jsonResponse(400, { message: "No fields to update" });
         }
         
@@ -292,6 +364,7 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
         
         const updateExpr = "SET " + expressions.join(", ");
         
+        const dbStart = Date.now();
         await doc.send(new UpdateCommand({
           TableName: TABLE,
           Key: { appointmentId },
@@ -299,44 +372,66 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
           ExpressionAttributeNames: attrNames,
           ExpressionAttributeValues: attrVals
         }));
+        logger.logDatabaseOperation('update', TABLE, true, Date.now() - dbStart, appointmentContext);
+        
+        logger.logBusinessLogic('appointment_update', true, { fieldsUpdated: Object.keys(body) }, appointmentContext);
+        monitor.end(true);
         
         return jsonResponse(200, { message: "Appointment updated successfully" });
       }
 
       // Delete appointment (cancel)
       if (subPath === "" && method === "DELETE") {
+        const monitor = new PerformanceMonitor(logger, 'cancel_appointment', appointmentContext);
+        
         const queryParams = event.queryStringParameters || {};
         const patientId = queryParams.patientId;
         
         if (!patientId) {
+          logger.logValidationError(['patientId query parameter required for cancellation'], appointmentContext);
+          monitor.end(false);
           return jsonResponse(400, { message: "patientId query parameter is required for cancellation" });
         }
         
+        const fullContext = { ...appointmentContext, patientId };
+        logger.info('Processing appointment cancellation', fullContext);
+        
         // First get the appointment to verify it exists and belongs to the patient
+        const dbStart = Date.now();
         const result = await doc.send(new GetCommand({ 
           TableName: TABLE, 
           Key: { appointmentId } 
         }));
+        logger.logDatabaseOperation('get', TABLE, true, Date.now() - dbStart, appointmentContext);
         
         if (!result.Item) {
+          logger.warn('Appointment not found for cancellation', fullContext);
+          monitor.end(false);
           return jsonResponse(404, { message: "Appointment not found" });
         }
         
         const appointment = result.Item as Appointment;
         if (appointment.patientId !== patientId) {
+          logger.warn('Unauthorized cancellation attempt', { ...fullContext, actualPatientId: appointment.patientId });
+          monitor.end(false);
           return jsonResponse(403, { message: "You can only cancel your own appointments" });
         }
         
         if (appointment.appointmentStatus === 'cancelled') {
+          logger.warn('Attempt to cancel already cancelled appointment', fullContext);
+          monitor.end(false);
           return jsonResponse(400, { message: "Appointment is already cancelled" });
         }
         
         if (appointment.appointmentStatus === 'completed') {
+          logger.warn('Attempt to cancel completed appointment', fullContext);
+          monitor.end(false);
           return jsonResponse(400, { message: "Cannot cancel a completed appointment" });
         }
         
         // Update appointment status to cancelled instead of deleting
         const now = new Date().toISOString();
+        const updateStart = Date.now();
         await doc.send(new UpdateCommand({
           TableName: TABLE,
           Key: { appointmentId },
@@ -348,18 +443,26 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
             ":updatedAt": now
           }
         }));
+        logger.logDatabaseOperation('update', TABLE, true, Date.now() - updateStart, fullContext);
+        
+        logger.logBusinessLogic('appointment_cancellation', true, { cancelledBy: patientId }, fullContext);
+        monitor.end(true);
         
         return jsonResponse(200, { message: "Appointment cancelled successfully" });
       }
     }
 
+    logger.warn('Route not found', logContext);
     return jsonResponse(404, { message: "Route not found" });
     
   } catch (err: any) {
-    console.error("Handler error:", err);
+    logger.error('Unhandled error in handler', logContext, err);
     return jsonResponse(500, { 
       message: "Internal server error", 
       error: err.message 
     });
   }
 };
+
+// Export handler with logging middleware
+export const handler = withLogging(handlerImpl, logger);

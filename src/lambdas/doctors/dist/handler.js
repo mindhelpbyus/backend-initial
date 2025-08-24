@@ -1292,12 +1292,14 @@ const lib_dynamodb_1 = __webpack_require__(489);
 const config_1 = __webpack_require__(838);
 const jwt = __importStar(__webpack_require__(578));
 const uuid_1 = __webpack_require__(858);
+const logger_1 = __webpack_require__(682);
 const TABLE = process.env.DOCTORS_TABLE || "DoctorsTable";
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 const doc = (0, config_1.getDynamoDBClient)();
+const logger = (0, logger_1.createLogger)(process.env.SERVICE_NAME || 'doctors');
 // Ensure DynamoDB is using local endpoint in test environment
 if (process.env.DYNAMODB_ENDPOINT) {
-    console.log("Using local DynamoDB endpoint:", process.env.DYNAMODB_ENDPOINT);
+    logger.info("Using local DynamoDB endpoint", { endpoint: process.env.DYNAMODB_ENDPOINT });
 }
 function jsonResponse(statusCode, body) {
     return {
@@ -1342,33 +1344,47 @@ function validateDoctorData(data) {
     }
     return errors;
 }
-const handler = async (event) => {
+const handlerImpl = async (event) => {
     const path = event.rawPath || event.requestContext.http?.path || "/";
     const method = event.requestContext.http?.method || event.requestContext?.http?.method;
+    const requestId = event.requestContext.requestId;
+    const logContext = {
+        requestId,
+        path,
+        method,
+        userAgent: event.headers?.['user-agent'],
+        ip: event.requestContext?.http?.sourceIp
+    };
     try {
         // Create a new doctor (admin only)
         if (path === "/doctors" && method === "POST") {
+            const monitor = new logger_1.PerformanceMonitor(logger, 'create_doctor', logContext);
             const auth = verifyAuth(event);
-            /* if (!auth || auth.role !== "admin") {
-               return jsonResponse(403, { message: "Admin access required" });
-             } */
             const body = event.body ? JSON.parse(event.body) : {};
             const validationErrors = validateDoctorData(body);
             if (validationErrors.length > 0) {
+                logger.logValidationError(validationErrors, logContext);
+                monitor.end(false);
                 return jsonResponse(400, { message: "Validation failed", errors: validationErrors });
             }
+            logger.info('Processing doctor creation request', { ...logContext, email: body.email });
             // Check if email already exists
+            const dbStart = Date.now();
             const existingDoctor = await doc.send(new lib_dynamodb_1.QueryCommand({
                 TableName: TABLE,
                 IndexName: "email-index",
                 KeyConditionExpression: "email = :e",
                 ExpressionAttributeValues: { ":e": body.email }
             }));
+            logger.logDatabaseOperation('query', TABLE, true, Date.now() - dbStart, { ...logContext, index: 'email-index' });
             if ((existingDoctor.Items || []).length > 0) {
+                logger.warn('Doctor creation attempt with existing email', { ...logContext, email: body.email });
+                monitor.end(false);
                 return jsonResponse(409, { message: "Doctor with this email already exists" });
             }
             const doctorId = (0, uuid_1.v4)();
             const now = new Date().toISOString();
+            const doctorContext = { ...logContext, doctorId };
             const doctor = {
                 doctorId,
                 email: body.email,
@@ -1387,44 +1403,68 @@ const handler = async (event) => {
                 createdAt: now,
                 isActive: true
             };
+            const putStart = Date.now();
             await doc.send(new lib_dynamodb_1.PutCommand({ TableName: TABLE, Item: doctor }));
+            logger.logDatabaseOperation('put', TABLE, true, Date.now() - putStart, doctorContext);
+            logger.logBusinessLogic('doctor_creation', true, { doctorId, email: body.email, specialization: body.specialization }, doctorContext);
+            monitor.end(true, { doctorId });
             return jsonResponse(201, { doctorId, message: "Doctor created successfully" });
         }
         // Get all doctors
         if (path === "/doctors" && method === "GET") {
+            const monitor = new logger_1.PerformanceMonitor(logger, 'get_doctors', logContext);
+            const auth = verifyAuth(event);
+            logger.info('Fetching doctors list', { ...logContext, authenticated: !!auth });
+            const dbStart = Date.now();
             const result = await doc.send(new lib_dynamodb_1.ScanCommand({ TableName: TABLE }));
+            logger.logDatabaseOperation('scan', TABLE, true, Date.now() - dbStart, { ...logContext, itemCount: result.Items?.length });
             const doctors = (result.Items || []).map(doctor => {
                 // Remove sensitive information if needed
                 return doctor;
             });
+            monitor.end(true, { itemCount: doctors.length });
             return jsonResponse(200, { doctors });
         }
         // Get doctors by specialization
         if (path === "/doctors/by-specialization" && method === "GET") {
+            const monitor = new logger_1.PerformanceMonitor(logger, 'get_doctors_by_specialization', logContext);
             const specialization = (event.queryStringParameters || {})["specialization"];
             if (!specialization) {
+                logger.logValidationError(['specialization query parameter required'], logContext);
+                monitor.end(false);
                 return jsonResponse(400, { message: "specialization query parameter is required" });
             }
+            logger.info('Fetching doctors by specialization', { ...logContext, specialization });
+            const dbStart = Date.now();
             const result = await doc.send(new lib_dynamodb_1.QueryCommand({
                 TableName: TABLE,
                 IndexName: "specialization-index",
                 KeyConditionExpression: "specialization = :s",
                 ExpressionAttributeValues: { ":s": specialization }
             }));
+            logger.logDatabaseOperation('query', TABLE, true, Date.now() - dbStart, { ...logContext, index: 'specialization-index', itemCount: result.Items?.length });
+            monitor.end(true, { itemCount: result.Items?.length });
             return jsonResponse(200, { doctors: result.Items || [] });
         }
         // Get doctor by email
         if (path === "/doctors/by-email" && method === "GET") {
+            const monitor = new logger_1.PerformanceMonitor(logger, 'get_doctor_by_email', logContext);
             const email = (event.queryStringParameters || {})["email"];
             if (!email) {
+                logger.logValidationError(['email query parameter required'], logContext);
+                monitor.end(false);
                 return jsonResponse(400, { message: "email query parameter is required" });
             }
+            logger.info('Fetching doctor by email', { ...logContext, email });
+            const dbStart = Date.now();
             const result = await doc.send(new lib_dynamodb_1.QueryCommand({
                 TableName: TABLE,
                 IndexName: "email-index",
                 KeyConditionExpression: "email = :e",
                 ExpressionAttributeValues: { ":e": email }
             }));
+            logger.logDatabaseOperation('query', TABLE, true, Date.now() - dbStart, { ...logContext, index: 'email-index', itemCount: result.Items?.length });
+            monitor.end(true, { itemCount: result.Items?.length });
             return jsonResponse(200, { doctors: result.Items || [] });
         }
         // Handle doctor-specific routes
@@ -1432,25 +1472,32 @@ const handler = async (event) => {
         if (doctorIdMatch) {
             const doctorId = decodeURIComponent(doctorIdMatch[1]);
             const subPath = doctorIdMatch[2] || "";
+            const doctorContext = { ...logContext, doctorId };
             // Get specific doctor details
             if (subPath === "" && method === "GET") {
+                const monitor = new logger_1.PerformanceMonitor(logger, 'get_doctor', doctorContext);
+                logger.info('Fetching doctor details', doctorContext);
+                const dbStart = Date.now();
                 const result = await doc.send(new lib_dynamodb_1.GetCommand({
                     TableName: TABLE,
                     Key: { doctorId }
                 }));
+                logger.logDatabaseOperation('get', TABLE, true, Date.now() - dbStart, doctorContext);
                 if (!result.Item) {
+                    logger.warn('Doctor not found', doctorContext);
+                    monitor.end(false);
                     return jsonResponse(404, { message: "Doctor not found" });
                 }
+                monitor.end(true);
                 return jsonResponse(200, result.Item);
             }
             // Update doctor information
             if (subPath === "" && method === "PUT") {
+                const monitor = new logger_1.PerformanceMonitor(logger, 'update_doctor', doctorContext);
                 const auth = verifyAuth(event);
-                /* if (!auth || (auth.role !== "admin" && auth.doctorId !== doctorId)) {
-                   return jsonResponse(403, { message: "Access denied" });
-                 } */
                 const body = event.body ? JSON.parse(event.body) : {};
                 const updateData = body;
+                logger.info('Updating doctor', { ...doctorContext, authenticated: !!auth, fieldsToUpdate: Object.keys(body) });
                 // Build update expression
                 const expressions = [];
                 const attrVals = {};
@@ -1467,6 +1514,8 @@ const handler = async (event) => {
                     }
                 }
                 if (expressions.length === 0) {
+                    logger.logValidationError(['no fields to update'], doctorContext);
+                    monitor.end(false);
                     return jsonResponse(400, { message: "No fields to update" });
                 }
                 // Add updatedAt timestamp
@@ -1475,6 +1524,7 @@ const handler = async (event) => {
                 attrNames[`#n${i}`] = "updatedAt";
                 attrVals[`:v${i}`] = new Date().toISOString();
                 const updateExpr = "SET " + expressions.join(", ");
+                const dbStart = Date.now();
                 await doc.send(new lib_dynamodb_1.UpdateCommand({
                     TableName: TABLE,
                     Key: { doctorId },
@@ -1482,32 +1532,40 @@ const handler = async (event) => {
                     ExpressionAttributeNames: attrNames,
                     ExpressionAttributeValues: attrVals
                 }));
+                logger.logDatabaseOperation('update', TABLE, true, Date.now() - dbStart, doctorContext);
+                logger.logBusinessLogic('doctor_update', true, { fieldsUpdated: Object.keys(body) }, doctorContext);
+                monitor.end(true);
                 return jsonResponse(200, { message: "Doctor updated successfully" });
             }
             // Delete doctor
             if (subPath === "" && method === "DELETE") {
+                const monitor = new logger_1.PerformanceMonitor(logger, 'delete_doctor', doctorContext);
                 const auth = verifyAuth(event);
-                /*  if (!auth || auth.role !== "admin") {
-                    return jsonResponse(403, { message: "Admin access required" });
-                  } */
+                logger.info('Deleting doctor', { ...doctorContext, authenticated: !!auth });
+                const dbStart = Date.now();
                 await doc.send(new lib_dynamodb_1.DeleteCommand({
                     TableName: TABLE,
                     Key: { doctorId }
                 }));
+                logger.logDatabaseOperation('delete', TABLE, true, Date.now() - dbStart, doctorContext);
+                logger.logBusinessLogic('doctor_deletion', true, {}, doctorContext);
+                monitor.end(true);
                 return jsonResponse(200, { message: "Doctor deleted successfully" });
             }
         }
+        logger.warn('Route not found', logContext);
         return jsonResponse(404, { message: "Route not found" });
     }
     catch (err) {
-        console.error("Handler error:", err);
+        logger.error('Unhandled error in handler', logContext, err);
         return jsonResponse(500, {
             message: "Internal server error",
             error: err.message
         });
     }
 };
-exports.handler = handler;
+// Export handler with logging middleware
+exports.handler = (0, logger_1.withLogging)(handlerImpl, logger);
 
 
 /***/ }),
@@ -2330,6 +2388,261 @@ function values(object) {
 }
 
 module.exports = includes;
+
+
+/***/ }),
+
+/***/ 682:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.withLogging = exports.PerformanceMonitor = exports.createLogger = exports.Logger = exports.LogLevel = void 0;
+var LogLevel;
+(function (LogLevel) {
+    LogLevel[LogLevel["DEBUG"] = 0] = "DEBUG";
+    LogLevel[LogLevel["INFO"] = 1] = "INFO";
+    LogLevel[LogLevel["WARN"] = 2] = "WARN";
+    LogLevel[LogLevel["ERROR"] = 3] = "ERROR";
+})(LogLevel || (exports.LogLevel = LogLevel = {}));
+class Logger {
+    constructor(service, environment = "production" || 0) {
+        this.service = service;
+        this.environment = environment;
+        this.logLevel = this.getLogLevel();
+    }
+    getLogLevel() {
+        const level = process.env.LOG_LEVEL?.toUpperCase() || 'INFO';
+        switch (level) {
+            case 'DEBUG': return LogLevel.DEBUG;
+            case 'INFO': return LogLevel.INFO;
+            case 'WARN': return LogLevel.WARN;
+            case 'ERROR': return LogLevel.ERROR;
+            default: return LogLevel.INFO;
+        }
+    }
+    shouldLog(level) {
+        return level >= this.logLevel;
+    }
+    createLogEntry(level, message, context, error) {
+        const entry = {
+            timestamp: new Date().toISOString(),
+            level,
+            message,
+            service: this.service,
+            environment: this.environment
+        };
+        if (context) {
+            entry.context = context;
+        }
+        if (error) {
+            entry.error = {
+                name: error.name,
+                message: error.message,
+                stack: error.stack
+            };
+        }
+        return entry;
+    }
+    log(level, levelName, message, context, error) {
+        if (!this.shouldLog(level))
+            return;
+        const entry = this.createLogEntry(levelName, message, context, error);
+        // In production, use structured JSON logging
+        if (this.environment === 'production') {
+            console.log(JSON.stringify(entry));
+        }
+        else {
+            // In development, use more readable format
+            const contextStr = context ? ` | Context: ${JSON.stringify(context)}` : '';
+            const errorStr = error ? ` | Error: ${error.message}` : '';
+            console.log(`[${entry.timestamp}] ${levelName}: ${message}${contextStr}${errorStr}`);
+        }
+    }
+    debug(message, context) {
+        this.log(LogLevel.DEBUG, 'DEBUG', message, context);
+    }
+    info(message, context) {
+        this.log(LogLevel.INFO, 'INFO', message, context);
+    }
+    warn(message, context, error) {
+        this.log(LogLevel.WARN, 'WARN', message, context, error);
+    }
+    error(message, context, error) {
+        this.log(LogLevel.ERROR, 'ERROR', message, context, error);
+    }
+    // Convenience methods for common operations
+    logRequest(method, path, context) {
+        this.info(`Incoming ${method} request`, {
+            ...context,
+            method,
+            path,
+            operation: 'request_start'
+        });
+    }
+    logResponse(method, path, statusCode, duration, context) {
+        const message = `${method} ${path} - ${statusCode}`;
+        const logContext = {
+            ...context,
+            method,
+            path,
+            statusCode,
+            duration,
+            operation: 'request_complete'
+        };
+        if (statusCode >= 400) {
+            this.error(message, logContext);
+        }
+        else if (statusCode >= 300) {
+            this.warn(message, logContext);
+        }
+        else {
+            this.info(message, logContext);
+        }
+    }
+    logDatabaseOperation(operation, table, success, duration, context) {
+        const message = `Database ${operation} on ${table} - ${success ? 'SUCCESS' : 'FAILED'}`;
+        const logContext = {
+            ...context,
+            operation: `db_${operation}`,
+            table,
+            duration,
+            success
+        };
+        if (success) {
+            this.info(message, logContext);
+        }
+        else {
+            this.error(message, logContext);
+        }
+    }
+    logAuthentication(success, userId, reason, context) {
+        const message = success ? 'Authentication successful' : `Authentication failed: ${reason}`;
+        const logContext = {
+            ...context,
+            userId,
+            operation: 'authentication',
+            success,
+            reason
+        };
+        if (success) {
+            this.info(message, logContext);
+        }
+        else {
+            this.warn(message, logContext);
+        }
+    }
+    logValidationError(errors, context) {
+        this.warn('Validation failed', {
+            ...context,
+            operation: 'validation',
+            errors
+        });
+    }
+    logBusinessLogic(operation, success, details, context) {
+        const message = `Business operation: ${operation} - ${success ? 'SUCCESS' : 'FAILED'}`;
+        const logContext = {
+            ...context,
+            operation: `business_${operation}`,
+            success,
+            details
+        };
+        if (success) {
+            this.info(message, logContext);
+        }
+        else {
+            this.error(message, logContext);
+        }
+    }
+}
+exports.Logger = Logger;
+// Create service-specific loggers
+const createLogger = (service) => {
+    return new Logger(service);
+};
+exports.createLogger = createLogger;
+// Performance monitoring utility
+class PerformanceMonitor {
+    constructor(logger, operation, context = {}) {
+        this.logger = logger;
+        this.operation = operation;
+        this.context = context;
+        this.startTime = Date.now();
+        this.logger.debug(`Starting operation: ${operation}`, {
+            ...context,
+            operation: `${operation}_start`
+        });
+    }
+    end(success = true, additionalContext) {
+        const duration = Date.now() - this.startTime;
+        const message = `Operation ${this.operation} completed in ${duration}ms - ${success ? 'SUCCESS' : 'FAILED'}`;
+        const logContext = {
+            ...this.context,
+            ...additionalContext,
+            operation: `${this.operation}_complete`,
+            duration,
+            success
+        };
+        if (success) {
+            this.logger.info(message, logContext);
+        }
+        else {
+            this.logger.error(message, logContext);
+        }
+        return duration;
+    }
+    endWithError(error, additionalContext) {
+        const duration = Date.now() - this.startTime;
+        this.logger.error(`Operation ${this.operation} failed after ${duration}ms`, {
+            ...this.context,
+            ...additionalContext,
+            operation: `${this.operation}_error`,
+            duration
+        }, error);
+        return duration;
+    }
+}
+exports.PerformanceMonitor = PerformanceMonitor;
+// Middleware for Lambda request/response logging
+const withLogging = (handler, logger) => {
+    return async (event, context) => {
+        const requestId = context.awsRequestId;
+        const startTime = Date.now();
+        // Extract request information
+        const method = event.requestContext?.http?.method || 'UNKNOWN';
+        const path = event.rawPath || event.requestContext?.http?.path || 'UNKNOWN';
+        const userAgent = event.headers?.['user-agent'] || 'UNKNOWN';
+        const ip = event.requestContext?.http?.sourceIp || 'UNKNOWN';
+        const logContext = {
+            requestId,
+            method,
+            path,
+            userAgent,
+            ip
+        };
+        logger.logRequest(method, path, logContext);
+        try {
+            const result = await handler(event, context);
+            const duration = Date.now() - startTime;
+            logger.logResponse(method, path, result.statusCode || 200, duration, {
+                ...logContext,
+                responseSize: result.body ? result.body.length : 0
+            });
+            return result;
+        }
+        catch (error) {
+            const duration = Date.now() - startTime;
+            logger.error('Unhandled error in Lambda handler', {
+                ...logContext,
+                duration
+            }, error);
+            // Re-throw the error to maintain original behavior
+            throw error;
+        }
+    };
+};
+exports.withLogging = withLogging;
 
 
 /***/ }),
